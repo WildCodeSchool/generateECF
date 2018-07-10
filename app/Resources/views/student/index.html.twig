@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <h1 class="title">Liste des eleves de la promo {{ promo.langage }} pour la ville de {{ promo.city }}</h1>
+        <a class="btn btn-primary btn-lg btn-block" href="{{ path('generate_ecf', { 'promo': promo.id }) }}" role="button">Telecharger le zip d'ecf</a>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hove table-responsive  r">
+            <thead>
+            <tr>
+                <th>Actions</th>
+                <th>Name</th>
+                <th>Firstname</th>
+                <th>Dateofbirth</th>
+                <th>Activity one</th>
+                <th>Eval supp one</th>
+                <th>Activity two</th>
+                <th>Eval supp two</th>
+                <th>Observation student</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for student in students %}
+                <tr>
+                    <td>
+                        <a class="btn btn-default" href="{{ path('student_edit', { 'promo': promo.id, 'id': student.id }) }}" role="button">Edit</a>
+                    </td>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.firstname }}</td>
+                    <td>{% if student.dateOfBirth %}{{ student.dateOfBirth|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                        <p>{% if student.validateActivityOne %}Yes{% else %}No{% endif %}</p>
+                        <p>{{ student.commActivityOne|slice(1, 50) ~ '...' }}</p>
+                    </td>
+                    <td>
+                        <p>{% if student.validateEvalSuppOne %}Yes{% else %}No{% endif %}</p>
+                        <p>{{ student.commEvalSuppOne|slice(1, 50) ~ '...' }}</p>
+                    </td>
+                    <td>
+                        <p>{% if student.validateActivityTwo %}Yes{% else %}No{% endif %}</p>
+                        <p>{{ student.commActivityTwo|slice(1, 50) ~ '...' }}</p>
+                    </td>
+                    <td>
+                        <p>{% if student.validateEvalSuppTwo %}Yes{% else %}No{% endif %}</p>
+                        <p>{{ student.commEvalSuppTwo|slice(1, 50) ~ '...' }}</p>
+                    </td>
+                    <td>{{ student.observationStudent|slice(1, 50) ~ '...' }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

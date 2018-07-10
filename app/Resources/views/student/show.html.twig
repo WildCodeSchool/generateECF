@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Student</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ student.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ student.name }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ student.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Dateofbirth</th>
+                <td>{% if student.dateOfBirth %}{{ student.dateOfBirth|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Campus</th>
+                <td>{{ student.campus }}</td>
+            </tr>
+            <tr>
+                <th>Validateactivityone</th>
+                <td>{% if student.validateActivityOne %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Commactivityone</th>
+                <td>{{ student.commActivityOne }}</td>
+            </tr>
+            <tr>
+                <th>Validateevalsuppone</th>
+                <td>{% if student.validateEvalSuppOne %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Commevalsuppone</th>
+                <td>{{ student.commEvalSuppOne }}</td>
+            </tr>
+            <tr>
+                <th>Validateactivitytwo</th>
+                <td>{% if student.validateActivityTwo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Commactivitytwo</th>
+                <td>{{ student.commActivityTwo }}</td>
+            </tr>
+            <tr>
+                <th>Validateevalsupptwo</th>
+                <td>{% if student.validateEvalSuppTwo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Commevalsupptwo</th>
+                <td>{{ student.commEvalSuppTwo }}</td>
+            </tr>
+            <tr>
+                <th>Observationstudent</th>
+                <td>{{ student.observationStudent }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('student_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('student_edit', { 'id': student.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

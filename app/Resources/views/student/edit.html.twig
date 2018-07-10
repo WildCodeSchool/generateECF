@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Student edit</h1>
+    <p>{{ student.name }} //
+    {{ student.firstname }} //
+    {{ student.dateOfBirth|date("d/m/Y") }} //
+    {{ student.gender }} //
+    {{ student.promo.name }}</p>
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Edit" />
+    {{ form_end(edit_form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('student_index', { 'promo': promo.id }) }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

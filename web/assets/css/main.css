@@ -1,0 +1,28 @@
+/*Nav*/
+.navbar-brand {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    margin: auto;
+    font-size: 30px;
+}
+.navbar-toggle {
+    z-index:3;
+}
+.menu-item{
+    font-size: 20px;
+}
+
+
+/*Homepage*/
+.title{
+    text-align: center;
+    margin: 50px 0;
+}
+
+/*Box result*/
+#boxPromo{
+    margin-top: 50px;
+}
