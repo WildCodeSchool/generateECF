@@ -10,22 +10,18 @@ use Symfony\Component\HttpFoundation\Request;
 class SearchController extends Controller
 {
     /**
-     * @Route("/search", name="search")
+     * @Route("/search/result", name="search")
      */
     public function searchAction(Request $request)
     {
-        dump($request);
         if ($request->isMethod('GET')) {
             $search = $request->query->get('name');
             $students = $this->getDoctrine()->getRepository(Student::class)->searchStudent($search);
-
         }
 
         return $this->render('search/search.html.twig', [
                 'students' => $students ?? [],
             ]
         );
-
     }
-
 }
