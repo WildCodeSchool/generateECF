@@ -1,17 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1 class="title">Choisi ta ville</h1>
+    <div class="jumbotron text-center">
+        <h1 class="display-5"><i class="fa fa-cogs"></i> ECF Generator</h1>
+        <p class="lead">This application generates ECF automatically</p>
+        <hr class="my-4">
+        <p class="h4 mb-3"><i class="fa fa-map-marker-alt"></i> Choose your city</p>
 
-    <div class="btn-group btn-group-justified" role="group">
-        {% for city in cities %}
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default cityButton" data-linkrequest="{{ path('homepage') }}" data-cityid="{{ city.id }}">{{ city.name }}</button>
-            </div>
-        {% endfor %}
+        <nav class="nav nav-pills justify-content-center nav-justified nav-city">
+            {% for cityPill in cities %}
+                <a class="nav-link btn mx-1 cityButton  {{ cityPill==city ? 'active text-white btn-warning' : 'btn-outline-dark' }}"
+                   href="{{ path('homepage', {'city':cityPill.id}) }}">
+                    {{ cityPill.name }}
+                </a>
+            {% endfor %}
+        </nav>
     </div>
-
-    <div id="boxPromo">
-
-    </div>
+    {% if city %}
+        <div class="boxPromo" id="boxPromo">
+            {{ render(controller('AppBundle:Home:listPromos', {'city':city} )) }}
+        </div>
+    {% endif %}
 {% endblock %}

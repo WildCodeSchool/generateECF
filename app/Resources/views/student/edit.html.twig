@@ -1,21 +1,82 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Student edit</h1>
-    <p>{{ student.name }} //
-    {{ student.firstname }} //
-    {{ student.dateOfBirth|date("d/m/Y") }} //
-    {{ student.gender }} //
-    {{ student.promo.name }}</p>
+    <div class="row">
+        <div class="col">
+            <div class="media my-3">
+                <img class="mr-3" src="http://via.placeholder.com/150x150" alt="Generic placeholder image">
+                <div class="media-body">
+                    <h1 class="h3">{{ student.firstname }} {{ student.name|upper }}</h1>
+                    <p class="col-4">
+                        {{ student.dateOfBirth|date("d/m/Y") }} <br/>
+                        {{ student.gender }} <br/>
+                        {{ student.promo.name }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+    <div class="row">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-header h4 text-white bg-dark">Activity one</div>
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text">
+                        {{ form_row(edit_form.commActivityOne) }}
+                        {{ form_row(edit_form.validateActivityOne) }}
+                    </p>
+                    <hr/>
+                    <p class="card-text">
+                        {{ form_row(edit_form.commEvalSuppOne) }}
+                        {{ form_row(edit_form.validateEvalSuppOne) }}
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-header h4 text-white bg-dark">Activity two</div>
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text">
+                        {{ form_row(edit_form.commActivityTwo) }}
+                        {{ form_row(edit_form.validateActivityTwo) }}
+                    </p>
+                    <hr/>
+                    <p class="card-text">
+                        {{ form_row(edit_form.commEvalSuppTwo) }}
+                        {{ form_row(edit_form.validateEvalSuppTwo) }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-header h4 text-white bg-dark">Observations</div>
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text">
+                        {{ form_row(edit_form.observationStudent) }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <input class="btn btn-success btn-block btn-lg" type="submit" value="Edit"/>
+        </div>
+    </div>
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('student_index', { 'promo': promo.id }) }}">Back to the list</a>
-        </li>
-    </ul>
+    <hr/>
+    <a class="btn btn-outline btn-outline-dark" href="{{ path('student_index', { 'promo': promo.id }) }}">Back to the
+        list</a>
+
 {% endblock %}

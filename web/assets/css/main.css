@@ -1,28 +1,36 @@
-/*Nav*/
-.navbar-brand {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 0;
-    text-align: center;
-    margin: auto;
-    font-size: 30px;
+body {
+    padding-top: 70px;
 }
-.navbar-toggle {
-    z-index:3;
-}
-.menu-item{
-    font-size: 20px;
-}
-
-
-/*Homepage*/
-.title{
-    text-align: center;
-    margin: 50px 0;
+.navbar img {
+    width:40px;
 }
 
 /*Box result*/
-#boxPromo{
+.boxPromo {
     margin-top: 50px;
 }
+
+.boxPromo img {
+    height: 150px;
+    object-fit: contain;
+}
+
+.logo {
+    max-height: 150px;
+}
+
+
+.nav-city a.cityButton {
+    color:black;
+}
+
+.nav-city a.cityButton:hover {
+    color:darkslategrey;
+    border:1px solid darkslategrey;
+}
+
+.nav-city a.active:hover {
+    color:white;
+    border:0px solid darkslategrey;
+}
+
