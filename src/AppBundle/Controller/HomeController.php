@@ -33,7 +33,7 @@ class HomeController extends Controller
 
      /**
      * @return Response
-     * @Route("/{city}", name="homepage")
+     * @Route("/city/{city}", name="homepage")
      */
     public function indexAction(City $city = null)
     {

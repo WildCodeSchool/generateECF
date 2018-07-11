@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class StudentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function searchStudent(string $search)
+    {
+        return $this->createQueryBuilder('s')
+            ->where('CONCAT(s.firstname, \' \', s.name) LIKE :search')
+            ->setParameter(':search', "%$search%")
+            ->orderBy('s.firstname', 'ASC')
+            ->addOrderBy('s.name', 'ASC')
+            ->getQuery()->getResult();
+    }
 }
