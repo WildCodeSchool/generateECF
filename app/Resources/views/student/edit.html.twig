@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col">
             <div class="media my-3">
-                <img class="mr-3" src="http://via.placeholder.com/150x150" alt="Generic placeholder image">
+                <img class="mr-3" src="http://via.placeholder.com/150x150" alt="Student picture">
                 <div class="media-body">
                     <h1 class="h3">{{ student.firstname }} {{ student.name|upper }}</h1>
                     <p class="col-4">
@@ -76,7 +76,7 @@
     {{ form_end(edit_form) }}
 
     <hr/>
-    <a class="btn btn-outline btn-outline-dark" href="{{ path('student_index', { 'promo': promo.id }) }}">Back to the
+    <a class="btn btn-outline btn-outline-dark" href="{{ path('student_index', { 'promo': student.promo.id }) }}">Back to the
         list</a>
 
 {% endblock %}

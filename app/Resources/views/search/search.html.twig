@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Search{% endblock %}
+
+{% block body %}
+<h1>Search results <span class="badge badge-warning">{{ students|length }}</span></h1>
+    <div class="row">
+        {% for student in students %}
+            <div class="col-md-3">
+                <a href="{{ path('student_edit', { 'id': student.id }) }}">
+                    <div class="card">
+                        <h2 class="h5 card-header bg-dark text-white">
+                            <span class="badge badge-info float-right">{{ student.promo.city.name }}</span>
+                            {{ student.firstname }} {{ student.name|upper }}
+                        </h2>
+                        <div class="card-body text-dark text-center">
+                            <p class="">
+                                <span class="badge badge-warning float-right">{{ student.promo.langage }}</span>
+                                <img src="http://via.placeholder.com/150x150" class="" alt="Student picture"/>
+                            </p>
+                            <p class="card-text">{{ student.promo.name }}</p>
+                        </div>
+
+                    </div>
+                </a>
+            </div>
+
+        {% else %}
+            <div class="col">
+                <div class="alert alert-danger">There is no result</div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
