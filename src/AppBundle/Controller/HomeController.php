@@ -15,33 +15,35 @@ use AppBundle\Services\WritePdf;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-class DefaultController extends Controller
+class HomeController extends Controller
 {
     /**
      * @return Response
-     * @Route("/", name="homepage")
      */
-    public function indexAction(Request $request){
-
+    public function listPromosAction(City $city = null)
+    {
         $em = $this->getDoctrine()->getManager();
 
-        if ($request->isXmlHttpRequest()){
-            $cityId = $request->get('cityId');
-            $promos = $em->getRepository(Promo::class)->getPromoByCity($cityId);
+        $promos = $em->getRepository(Promo::class)->findBy(['city' => $city], ['langage' => 'ASC', 'name' => 'ASC']);
+        return $this->render('default/includes/boxPromoResult.html.twig', [
+            'promos' => $promos ?? [],
+        ]);
 
-            $promoTemplate = $this->renderView('default/includes/boxPromoResult.html.twig', array(
-                'promos' => $promos
-            ));
+    }
 
-            return new JsonResponse($promoTemplate);
+     /**
+     * @return Response
+     * @Route("/{city}", name="homepage")
+     */
+    public function indexAction(City $city = null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $cities = $em->getRepository(City::class)->findBy([], ['name'=>'ASC']);
 
-        } else {
-            $cities = $em->getRepository(City::class)->findAll();
-
-            return $this->render('default/index.html.twig', array(
-                'cities' => $cities
-            ));
-        }
+        return $this->render('default/index.html.twig', [
+            'cities' => $cities,
+            'city'   => $city,
+        ]);
 
     }
 
@@ -54,11 +56,12 @@ class DefaultController extends Controller
      *
      * @Route("/generate/{promo}", name="generate_ecf")
      */
-    public function generatePdf(Promo $promo, WritePdf $writePdf, Zip $zip){
+    public function generatePdf(Promo $promo, WritePdf $writePdf, Zip $zip)
+    {
         $em = $this->getDoctrine()->getManager();
         $students = $em->getRepository(Student::class)->findBy(array('promo' => $promo));
 
-        foreach ($students as $student){
+        foreach ($students as $student) {
             $writePdf->generatePdf($student);
         }
 
@@ -66,6 +69,7 @@ class DefaultController extends Controller
 
         $response = new BinaryFileResponse($zipInfos['path_to_zip']);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $zipInfos['filename']);
+
         return $response;
     }
 }

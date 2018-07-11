@@ -25,7 +25,7 @@ class StudentController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $students = $em->getRepository(Student::class)->findBy(array('promo' => $promo));
+        $students = $em->getRepository(Student::class)->findBy(['promo' => $promo], ['firstname'=>'ASC', 'name'=>'ASC']);
 
         return $this->render('student/index.html.twig', array(
             'students' => $students,

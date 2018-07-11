@@ -1,57 +1,68 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="row">
-        <h1 class="title">Liste des eleves de la promo {{ promo.langage }} pour la ville de {{ promo.city }}</h1>
-        <a class="btn btn-primary btn-lg btn-block" href="{{ path('generate_ecf', { 'promo': promo.id }) }}" role="button">Telecharger le zip d'ecf</a>
+    <div class="row mt-1">
+        <div class="col">
+            <h1 class="h2 title">Promotion {{ promo.name }} <i class="fab fa-{{ promo.langage|lower }}"></i>
+                - {{ promo.city }}</h1>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-2">
+        <div class="col-4">
+            <a class="btn btn-dark btn-lg btn-block" href="{{ path('generate_ecf', { 'promo': promo.id }) }}"
+               role="button"><i class="fa fa-download text-warning"></i> Telecharger le zip d'ecf</a>
+        </div>
     </div>
 
     <div class="row">
-        <table class="table table-bordered table-hove table-responsive  r">
-            <thead>
-            <tr>
-                <th>Actions</th>
-                <th>Name</th>
-                <th>Firstname</th>
-                <th>Dateofbirth</th>
-                <th>Activity one</th>
-                <th>Eval supp one</th>
-                <th>Activity two</th>
-                <th>Eval supp two</th>
-                <th>Observation student</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for student in students %}
-                <tr>
-                    <td>
-                        <a class="btn btn-default" href="{{ path('student_edit', { 'promo': promo.id, 'id': student.id }) }}" role="button">Edit</a>
-                    </td>
-                    <td>{{ student.name }}</td>
-                    <td>{{ student.firstname }}</td>
-                    <td>{% if student.dateOfBirth %}{{ student.dateOfBirth|date('Y-m-d H:i:s') }}{% endif %}</td>
-                    <td>
-                        <p>{% if student.validateActivityOne %}Yes{% else %}No{% endif %}</p>
-                        <p>{{ student.commActivityOne|slice(1, 50) ~ '...' }}</p>
-                    </td>
-                    <td>
-                        <p>{% if student.validateEvalSuppOne %}Yes{% else %}No{% endif %}</p>
-                        <p>{{ student.commEvalSuppOne|slice(1, 50) ~ '...' }}</p>
-                    </td>
-                    <td>
-                        <p>{% if student.validateActivityTwo %}Yes{% else %}No{% endif %}</p>
-                        <p>{{ student.commActivityTwo|slice(1, 50) ~ '...' }}</p>
-                    </td>
-                    <td>
-                        <p>{% if student.validateEvalSuppTwo %}Yes{% else %}No{% endif %}</p>
-                        <p>{{ student.commEvalSuppTwo|slice(1, 50) ~ '...' }}</p>
-                    </td>
-                    <td>{{ student.observationStudent|slice(1, 50) ~ '...' }}</td>
+        <div class="col">
 
+
+            <table class="table table-striped table-hover table-responsive">
+                <thead class="bg-dark text-white">
+                <tr>
+                    <th>Edit</th>
+                    <th>Name</th>
+                    <th>Activity one</th>
+                    <th>Eval supp one</th>
+                    <th>Activity two</th>
+                    <th>Eval supp two</th>
+                    <th>Observation student</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for student in students %}
+                    <tr>
+                        <th>
+                            <a class="btn btn-default"
+                               href="{{ path('student_edit', { 'promo': promo.id, 'id': student.id }) }}"
+                               role="button"><i class="fa fa-edit fa-lg text-dark"></i></a>
+                        </th>
+                        <td>{{ student.firstname }} {{ student.name|upper }}</td>
+                        <td>
+                            <i class="float-left mr-1 fas fa-{{ student.validateActivityOne ? 'check text-success' : 'times text-danger' }}"></i>
+                            <p class="small text-muted">{{ student.commActivityOne|slice(1, 50) ~ '...' }}</p>
+                        </td>
+                        <td>
+                            <i class="float-left mr-1 fas fa-{{ student.validateEvalSuppOne ? 'check text-success' : 'times text-danger' }}"></i>
+                            <p class="small text-muted">{{ student.commEvalSuppOne|slice(1, 50) ~ '...' }}</p>
+                        </td>
+                        <td>
+                            <i class="float-left mr-1 fas fa-{{ student.validateActivityTwo ? 'check text-success' : 'times text-danger' }}"></i>
+                            <p class="small text-muted">{{ student.commActivityTwo|slice(1, 50) ~ '...' }}</p>
+                        </td>
+                        <td>
+                            <i class="float-left mr-1 fas fa-{{ student.validateEvalSuppTwo ? 'check text-success' : 'times text-danger' }}"></i>
+                            <p class="small text-muted">{{ student.commEvalSuppTwo|slice(1, 50) ~ '...' }}</p>
+                        </td>
+
+                        <td class="small">{{ student.observationStudent|slice(1, 50) ~ '...' }}</td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
 {% endblock %}
