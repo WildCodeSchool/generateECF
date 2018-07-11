@@ -18,3 +18,4 @@
 .idea/*
 /web/ecfOutput
 /web/zipOutput
+**/Entity/*~
