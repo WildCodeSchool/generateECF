@@ -7,7 +7,7 @@
     <div class="row">
         {% for student in students %}
             <div class="col-md-3">
-                <a href="{{ path('student_edit', { 'id': student.id }) }}">
+                <a href="{{ path('student_edit', { 'promo': student.promo.id, 'student': student.id }) }}">
                     <div class="card">
                         <h2 class="h5 card-header bg-dark text-white">
                             <span class="badge badge-info float-right">{{ student.promo.city.name }}</span>

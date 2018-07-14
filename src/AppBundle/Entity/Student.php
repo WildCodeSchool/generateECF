@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Student
@@ -78,6 +79,11 @@ class Student
      * @var string
      *
      * @ORM\Column(name="commActivityOne", type="text", nullable=true)
+     *
+     * @Assert\Length(
+     *      max = 815,
+     *      maxMessage = "Your commActivityOne cannot be longer than {{ limit }} characters"
+     * )
      */
     private $commActivityOne;
 
@@ -92,6 +98,11 @@ class Student
      * @var string
      *
      * @ORM\Column(name="commEvalSuppOne", type="text", nullable=true)
+     *
+     * @Assert\Length(
+     *      max = 815,
+     *      maxMessage = "Your commEvalSuppOne cannot be longer than {{ limit }} characters"
+     * )
      */
     private $commEvalSuppOne;
 
@@ -106,6 +117,11 @@ class Student
      * @var string
      *
      * @ORM\Column(name="commActivityTwo", type="text", nullable=true)
+     *
+     * @Assert\Length(
+     *      max = 815,
+     *      maxMessage = "Your commActivityTwo cannot be longer than {{ limit }} characters"
+     * )
      */
     private $commActivityTwo;
 
@@ -120,6 +136,11 @@ class Student
      * @var string
      *
      * @ORM\Column(name="commEvalSuppTwo", type="text", nullable=true)
+     *
+     * @Assert\Length(
+     *      max = 815,
+     *      maxMessage = "Your commEvalSuppTwo cannot be longer than {{ limit }} characters"
+     * )
      */
     private $commEvalSuppTwo;
 
@@ -127,6 +148,11 @@ class Student
      * @var string
      *
      * @ORM\Column(name="observationStudent", type="text")
+     *
+     * @Assert\Length(
+     *      max = 815,
+     *      maxMessage = "Your observationStudent cannot be longer than {{ limit }} characters"
+     * )
      */
     private $observationStudent;
 
