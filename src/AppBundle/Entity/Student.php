@@ -200,7 +200,7 @@ class Student
      */
     public function getGender()
     {
-        return $this->gender == self::MALE ? 'Homme' : 'Femme';
+        return $this->gender;
     }
 
     /**

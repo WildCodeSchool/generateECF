@@ -9,7 +9,7 @@
                     <h1 class="h3">{{ student.firstname }} {{ student.name|upper }}</h1>
                     <p class="col-4">
                         {{ student.dateOfBirth|date("d/m/Y") }} <br/>
-                        {{ student.gender }} <br/>
+                        {{ student.gender == constant('AppBundle\\Entity\\Student::FEMALE') ? 'Femme' : 'Homme' }} <br/>
                         {{ student.promo.name }}
                     </p>
                 </div>
