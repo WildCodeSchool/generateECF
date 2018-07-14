@@ -54,6 +54,14 @@ class Promo
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Student", mappedBy="promo")
      */
     private $students;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="trainer", type="string", length=255, nullable=true)
+     */
+    private $trainer;
+
     /**
      * Get id.
      *
@@ -177,5 +185,21 @@ class Promo
     public function getStudents()
     {
         return $this->students;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrainer()
+    {
+        return $this->trainer;
+    }
+
+    /**
+     * @param string $trainer
+     */
+    public function setTrainer($trainer)
+    {
+        $this->trainer = $trainer;
     }
 }
