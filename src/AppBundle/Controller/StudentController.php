@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Student controller.
  *
- * @Route("/student")
+ * @Route("/students")
  */
 class StudentController extends Controller
 {
@@ -36,10 +36,15 @@ class StudentController extends Controller
     /**
      * Displays a form to edit an existing student entity.
      *
-     * @Route("/{id}/edit", name="student_edit")
+     * @param Request $request
+     * @param Promo $promo
+     * @param Student $student
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/promo/{promo}/{student}/edit", name="student_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Student $student)
+    public function editAction(Request $request, Promo $promo, Student $student)
     {
         $editForm = $this->createForm('AppBundle\Form\StudentType', $student);
         $editForm->handleRequest($request);
@@ -47,7 +52,7 @@ class StudentController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('student_index', array('promo' => $promo->getId(),'id' => $student->getPromo()->getId()));
+            return $this->redirectToRoute('student_index', array('promo' => $promo->getId()));
         }
 
         return $this->render('student/edit.html.twig', array(

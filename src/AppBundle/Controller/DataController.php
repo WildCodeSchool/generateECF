@@ -97,7 +97,6 @@ class DataController extends Controller
                         'name' => $student->lastname,
                         'dateOfBirth' => new \DateTime($student->birthdate)
                     ));
-                    dump($studentExist);
                     if ($studentExist == null){
                         $newStudent = new Student();
                         $newStudent->setName($student->lastname);
