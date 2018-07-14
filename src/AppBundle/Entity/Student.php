@@ -15,6 +15,15 @@ class Student
     const MALE = 1;
     const FEMALE = 2;
 
+    public function __construct()
+    {
+        $this->setValidateEvalSuppTwo(false);
+        $this->setValidateEvalSuppOne(false);
+        $this->setValidateActivityTwo(false);
+        $this->setValidateActivityOne(false);
+        $this->setObservationStudent("a remplir");
+    }
+
     /**
      * @var int
      *

@@ -10,6 +10,7 @@ parameters:
     template_directory: '%kernel.project_dir%/web/assets/ecfTemplate/'
     ecf_output: '%kernel.project_dir%/web/ecfOutput/'
     zip_directory: '%kernel.project_dir%/web/zipOutput/'
+    api_key_odyssey: '%key_api_odyssey%'
 
 framework:
     #esi: ~
