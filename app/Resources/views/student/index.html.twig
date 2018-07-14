@@ -22,6 +22,7 @@
                 <thead class="bg-dark text-white">
                 <tr>
                     <th>Edit</th>
+                    <th>Download ECF</th>
                     <th>Name</th>
                     <th>Activity one</th>
                     <th>Eval supp one</th>
@@ -37,6 +38,12 @@
                             <a class="btn btn-default"
                                href="{{ path('student_edit', { 'promo': promo.id, 'student': student.id }) }}"
                                role="button"><i class="fa fa-edit fa-lg text-dark"></i></a>
+                        </th>
+                        <th>
+                            <a class="btn btn-default"
+                               href="{{ path('generate_student_ecf', {'student': student.id }) }}"
+                               target="_blank"
+                               role="button"><i class="fas fa-download fa-lg text-dark"></i></a>
                         </th>
                         <td>{{ student.firstname }} {{ student.name|upper }}</td>
                         <td>

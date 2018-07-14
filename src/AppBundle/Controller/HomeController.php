@@ -54,7 +54,7 @@ class HomeController extends Controller
      *
      * @Route("/generate/{promo}", name="generate_ecf")
      */
-    public function generatePdf(Promo $promo, WritePdf $writePdf, Zip $zip)
+    public function generatePromoPdf(Promo $promo, WritePdf $writePdf, Zip $zip)
     {
         $em = $this->getDoctrine()->getManager();
         $students = $em->getRepository(Student::class)->findBy(array('promo' => $promo));
@@ -69,5 +69,18 @@ class HomeController extends Controller
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $zipInfos['filename']);
 
         return $response;
+    }
+
+    /**
+     * @param WritePdf $writePdf
+     * @param Student $student
+     * @return BinaryFileResponse
+     * @throws \setasign\Fpdi\PdfReader\PdfReaderException
+     *
+     * @Route("/generate/student/{student}", name="generate_student_ecf")
+     */
+    public function generateStudentPdf(Student $student, WritePdf $writePdf)
+    {
+        return new BinaryFileResponse($writePdf->generatePdf($student));
     }
 }

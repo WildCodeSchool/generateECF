@@ -86,8 +86,9 @@ class WritePdf
 
 //        TODO: For test
 //        $pdf->Output();
-
-        $pdf->Output('F', $this->output . str_replace(' ', '_', $student->getPromo()->getName()) . '/' . $filename);
+        $name = $this->output . str_replace(' ', '_', $student->getPromo()->getName()) . '/' . $filename;
+        $pdf->Output('F', $name);
+        return $name;
     }
 
     /**
