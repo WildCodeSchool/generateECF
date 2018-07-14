@@ -9,8 +9,6 @@ use AppBundle\Services\Zip;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Services\WritePdf;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -33,7 +31,7 @@ class HomeController extends Controller
 
      /**
      * @return Response
-     * @Route("/city/{city}", name="homepage")
+     * @Route("/{city}", name="homepage")
      */
     public function indexAction(City $city = null)
     {
