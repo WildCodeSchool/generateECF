@@ -2,6 +2,7 @@
 
 namespace AppBundle\Services;
 
+use AppBundle\Entity\Promo;
 use AppBundle\Entity\Student;
 use setasign\Fpdi\Fpdi;
 
@@ -36,11 +37,11 @@ class WritePdf
      * @return string
      * @throws \setasign\Fpdi\PdfReader\PdfReaderException
      */
-    public function generatePdf(Student $student){
+    public function generatePdf(Student $student, Promo $promo){
         // initiate FPDI
         $pdf = new Fpdi();
         // set the source file
-        $pdf->setSourceFile($this->template_directory . "php.pdf");
+        $pdf->setSourceFile($this->template_directory . "template.pdf");
 
         // Generate page 1
 
@@ -49,16 +50,18 @@ class WritePdf
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setCampus($pdf, utf8_decode($student->getPromo()->getCity()->getName()));
-        $this->setName($pdf, utf8_decode($student->getName()));
-        $this->setFirstname($pdf, utf8_decode($student->getFirstname()));
-        $this->setDateBirth($pdf, $student->getDateOfBirth());
-        $this->setGender($pdf, utf8_decode($student->getGender()));
+        $this->setSimpleTxt($pdf, utf8_decode($student->getPromo()->getCity()->getName()), 75.5, 176);
+        $this->setSimpleTxt($pdf, utf8_decode($student->getName()), 75.5, 194);
+        $this->setSimpleTxt($pdf, utf8_decode($student->getFirstname()), 75.5, 200);
+        $this->setSimpleTxt($pdf, $student->getDateOfBirth()->format('d-m-Y'), 75.5, 206);
+        $this->setValidation($pdf, utf8_decode($student->getGender()), 90, 188.8, 110, 188.8);
 
+        // Page 2
         $tplIdx = $pdf->importPage(2);
         $pdf->AddPage('P');
         $pdf->useTemplate($tplIdx);
 
+        // Page 3
         $tplIdx = $pdf->importPage(3);
         $pdf->AddPage('P');
         $pdf->useTemplate($tplIdx);
@@ -68,53 +71,58 @@ class WritePdf
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-
-        $this->setValidationlActivityOne($pdf, $student->getValidateActivityOne());
-
+        $this->setValidation($pdf, $student->getValidateActivityOne(), 16, 217, 16, 224);
 
 //         import page 5
         $tplIdx = $pdf->importPage(5);
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setCommActivityOne($pdf, utf8_decode($student->getCommActivityOne()));
+        $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 63);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 225);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 225);
+
 
 //         import page 6
         $tplIdx = $pdf->importPage(6);
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setValidationEvalActivityOne($pdf, $student->getValidateEvalSuppOne());
-        $this->setCommEvalActivityOne($pdf, utf8_decode($student->getCommEvalSuppOne()));
+        $this->setValidation($pdf, $student->getValidateEvalSuppOne(), 16, 145, 16, 156);
+        $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppOne()), 19, 180);
+        $this->setSimpleTxt($pdf, utf8_decode('Grandjean Florian'), 37, 240);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 240);
 
 //        Import page 7
         $tplIdx = $pdf->importPage(7);
         $pdf->AddPage('P');
         $pdf->useTemplate($tplIdx);
 
-        // import page 8
+// import page 8
         $tplIdx = $pdf->importPage(8);
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setValidationlActivityTwo($pdf, $student->getValidateActivityTwo());
-        $this->setCommActivityTwo($pdf, utf8_decode($student->getCommActivityTwo()));
+        $this->setValidation($pdf, $student->getValidateActivityTwo(), 16, 84, 16, 91);
+        $this->setLongText($pdf, utf8_decode($student->getCommActivityTwo()), 19, 117);
+        $this->setSimpleTxt($pdf, utf8_decode('Grandjean Florian'), 37, 203);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 203);
 
         // import page 9
         $tplIdx = $pdf->importPage(9);
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setValidationEvalActivityTwo($pdf, $student->getValidateEvalSuppTwo());
-        $this->setCommEvalActivityTwo($pdf, utf8_decode($student->getCommEvalSuppTwo()));
+        $this->setValidation($pdf, $student->getValidateEvalSuppTwo(), 16, 165, 16, 175);
+        $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppTwo()), 19, 197);
 
         // import page 10
-//        $tplIdx = $pdf->importPage(10);
-//        $pdf->AddPage('P');
-//        // use the imported page
-//        $pdf->useTemplate($tplIdx);
-//        $this->setValidationEvalActivityTwo($pdf, $student->getValidateEvalSuppTwo());
-//        $this->setCommEvalActivityTwo($pdf, utf8_decode($student->getCommEvalSuppTwo()));
+        $tplIdx = $pdf->importPage(10);
+        $pdf->AddPage('P');
+        // use the imported page
+        $pdf->useTemplate($tplIdx);
+        $this->setValidation($pdf, $student->getValidateActivityOne(), 16, 217, 16, 224);
+        $this->setValidation($pdf, $student->getValidateActivityTwo(), 16, 217, 16, 224);
 
 //        Import page 11
         $tplIdx = $pdf->importPage(11);
@@ -126,7 +134,9 @@ class WritePdf
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setObservationStudent($pdf, utf8_decode($student->getObservationStudent()));
+        $this->setLongText($pdf, utf8_decode($student->getObservationStudent()), 19, 73);
+        $this->setSimpleTxt($pdf, utf8_decode('Grandjean Florian'), 37, 153);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 153);
 
         $filename = $student->getName() . '_' . $student->getFirstname() . '_ecf.pdf';
         if (!file_exists($this->output . str_replace(' ', '_', $student->getPromo()->getName()))) {
@@ -140,67 +150,23 @@ class WritePdf
 
     /**
      * @param Fpdi $pdf
-     * @param $name
+     * @param $value
      */
-    private function setName(Fpdi $pdf, $name){
+    private function setSimpleTxt(Fpdi $pdf, $value, $x, $y){
         $pdf->SetFont('Helvetica','', 10);
-        $pdf->SetXY(75.5, 194);
-        $pdf->Write(0, $name);
-    }
-
-    /**
-     * @param Fpdi $pdf
-     * @param $firstname
-     */
-    private function setFirstname(Fpdi $pdf, $firstname){
-        $pdf->SetFont('Helvetica','', 10);
-        $pdf->SetXY(75.5, 200);
-        $pdf->Write(0, $firstname);
-    }
-
-    /**
-     * @param Fpdi $pdf
-     * @param \DateTime $date
-     */
-    private function setDateBirth(Fpdi $pdf, \DateTime $date){
-        $pdf->SetFont('Helvetica','', 10);
-        $pdf->SetXY(75.5, 206);
-        $pdf->Write(0, $date->format('d-m-Y'));
-    }
-
-    /**
-     * @param Fpdi $pdf
-     * @param $campus
-     */
-    private function setCampus(Fpdi $pdf, $campus){
-        $pdf->SetFont('Helvetica','', 10);
-        $pdf->SetXY(75.5, 176);
-        $pdf->Write(0, $campus);
-    }
-
-    /**
-     * @param Fpdi $pdf
-     * @param $gender
-     */
-    private function setGender(Fpdi $pdf, $gender){
-        if ($gender == Student::FEMALE){
-            $pdf->SetXY(90, 188.8);
-        } elseif ($gender == Student::MALE){
-            $pdf->SetXY(110, 188.8);
-        }
-        $pdf->SetFont('ZapfDingbats','', 10);
-        $pdf->Cell(0, 0, '4', 0, 0);
+        $pdf->SetXY($x, $y);
+        $pdf->Write(0, $value);
     }
 
     /**
      * @param Fpdi $pdf
      * @param $value
      */
-    public function setValidationlActivityOne(Fpdi $pdf, $value){
+    private function setValidation(Fpdi $pdf, $value, $xTrue, $yTrue, $xFalse, $yFalse){
         if ($value == true){
-            $pdf->SetXY(16, 214);
+            $pdf->SetXY($xTrue, $yTrue);
         } elseif ($value == false){
-            $pdf->SetXY(16, 221);
+            $pdf->SetXY($xFalse, $yFalse);
         }
         $pdf->SetFont('ZapfDingbats','', 10);
         $pdf->Cell(0, 0, '4', 0, 0);
@@ -210,108 +176,9 @@ class WritePdf
      * @param Fpdi $pdf
      * @param $comm
      */
-    public function setCommActivityOne(Fpdi $pdf, $comm){
+    private function setLongText(Fpdi $pdf, $comm, $x, $y){
         $pdf->SetFont('Helvetica','', 10);
-        $pdf->SetXY(19, 63);
-
-        // Sortie du texte justifié
-        $pdf->MultiCell(170,5,$comm);
-        // Saut de ligne
-        $pdf->Ln();
-    }
-
-    /**
-     * @param Fpdi $pdf
-     * @param $value
-     */
-    public function setValidationEvalActivityOne(Fpdi $pdf, $value){
-        if ($value == true){
-            $pdf->SetXY(16, 145);
-        } elseif ($value == false){
-            $pdf->SetXY(16, 156);
-        }
-        $pdf->SetFont('ZapfDingbats','', 10);
-        $pdf->Cell(0, 0, '4', 0, 0);
-    }
-
-
-    /**
-     * @param Fpdi $pdf
-     * @param $comm
-     */
-    public function setCommEvalActivityOne(Fpdi $pdf, $comm){
-        $pdf->SetFont('Helvetica','', 10);
-        $pdf->SetXY(19, 180);
-
-        // Sortie du texte justifié
-        $pdf->MultiCell(170,5,$comm);
-        // Saut de ligne
-        $pdf->Ln();
-    }
-
-    /**
-     * @param Fpdi $pdf
-     * @param $value
-     */
-    public function setValidationlActivityTwo(Fpdi $pdf, $value){
-        if ($value == true){
-            $pdf->SetXY(16, 102);
-        } elseif ($value == false){
-            $pdf->SetXY(16, 109);
-        }
-        $pdf->SetFont('ZapfDingbats','', 10);
-        $pdf->Cell(0, 0, '4', 0, 0);
-    }
-
-    /**
-     * @param Fpdi $pdf
-     * @param $comm
-     */
-    public function setCommActivityTwo(Fpdi $pdf, $comm){
-        $pdf->SetFont('Helvetica','', 10);
-        $pdf->SetXY(19, 135);
-
-        // Sortie du texte justifié
-        $pdf->MultiCell(170,5,$comm);
-        // Saut de ligne
-        $pdf->Ln();
-    }
-
-    /**
-     * @param Fpdi $pdf
-     * @param $value
-     */
-    public function setValidationEvalActivityTwo(Fpdi $pdf, $value){
-        if ($value == true){
-            $pdf->SetXY(16, 165);
-        } elseif ($value == false){
-            $pdf->SetXY(16, 175);
-        }
-        $pdf->SetFont('ZapfDingbats','', 10);
-        $pdf->Cell(0, 0, '4', 0, 0);
-    }
-
-    /**
-     * @param Fpdi $pdf
-     * @param $comm
-     */
-    public function setCommEvalActivityTwo(Fpdi $pdf, $comm){
-        $pdf->SetFont('Helvetica','', 10);
-        $pdf->SetXY(19, 197);
-
-        // Sortie du texte justifié
-        $pdf->MultiCell(170,5,$comm);
-        // Saut de ligne
-        $pdf->Ln();
-    }
-
-    /**
-     * @param Fpdi $pdf
-     * @param $comm
-     */
-    public function setObservationStudent(Fpdi $pdf, $comm){
-        $pdf->SetFont('Helvetica','', 10);
-        $pdf->SetXY(19, 73);
+        $pdf->SetXY($x, $y);
 
         // Sortie du texte justifié
         $pdf->MultiCell(170,5,$comm);

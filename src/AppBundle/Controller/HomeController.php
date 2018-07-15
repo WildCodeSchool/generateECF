@@ -60,7 +60,7 @@ class HomeController extends Controller
         $students = $em->getRepository(Student::class)->findBy(array('promo' => $promo));
 
         foreach ($students as $student) {
-            $writePdf->generatePdf($student);
+            $writePdf->generatePdf($student, $promo);
         }
 
         $zipInfos = $zip->zipFolder($promo);
@@ -77,10 +77,10 @@ class HomeController extends Controller
      * @return BinaryFileResponse
      * @throws \setasign\Fpdi\PdfReader\PdfReaderException
      *
-     * @Route("/generate/student/{student}", name="generate_student_ecf")
+     * @Route("/generate/promo/{promo}/student/{student}", name="generate_student_ecf")
      */
-    public function generateStudentPdf(Student $student, WritePdf $writePdf)
+    public function generateStudentPdf(Promo $promo, Student $student, WritePdf $writePdf)
     {
-        return new BinaryFileResponse($writePdf->generatePdf($student));
+        return new BinaryFileResponse($writePdf->generatePdf($student, $promo));
     }
 }
