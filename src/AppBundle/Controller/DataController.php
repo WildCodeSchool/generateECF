@@ -80,14 +80,17 @@ class DataController extends Controller
 //        TODO: Update language
                 $promo->setLangage($language[array_rand($language)]);
 
-                $city = $em->getRepository(City::class)->findOneBy(array('name' => $crew->location->city));
-                if ($city == null){
-                    $city = new City();
-                    $city->setName($crew->location->city);
-                    $em->persist($city);
-                    $em->flush();
+                if (isset($crew->location->city)){
+                    $city = $em->getRepository(City::class)->findOneBy(array('name' => $crew->location->city));
+                    if ($city == null){
+                        $city = new City();
+                        $city->setName($crew->location->city);
+                        $em->persist($city);
+                        $em->flush();
+                    }
+                    $promo->setCity($city);
                 }
-                $promo->setCity($city);
+
                 $em->persist($promo);
 
                 $students = $this->getApiStudentData($crew->id)->students;
