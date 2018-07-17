@@ -8,9 +8,17 @@
                 <div class="media-body">
                     <h1 class="h3">{{ student.firstname }} {{ student.name|upper }}</h1>
                     <p class="col-4">
-                        {{ student.dateOfBirth|date("d/m/Y") }} <br/>
-                        {{ student.gender == constant('AppBundle\\Entity\\Student::FEMALE') ? 'Femme' : 'Homme' }} <br/>
-                        {{ student.promo.name }}
+                        DateBirth: {{ student.dateOfBirth|date("d/m/Y") }} <br/>
+                        Gender:
+                        {% if student.gender == constant('AppBundle\\Entity\\Student::FEMALE') %}
+                            Femme
+                        {% elseif student.gender == constant('AppBundle\\Entity\\Student::MALE') %}
+                            Homme
+                        {% else %}
+                            Undefined
+                        {% endif %}
+                        <br/>
+                        PromoName: {{ student.promo.name }}
                     </p>
                 </div>
             </div>

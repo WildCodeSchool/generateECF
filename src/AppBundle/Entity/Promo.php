@@ -63,6 +63,53 @@ class Promo
     private $trainer;
 
     /**
+     * @return \DateTime
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * @param \DateTime $start
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * @param \DateTime $end
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
+    }
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="start", type="datetime", nullable=true)
+     */
+    private $start;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="end", type="datetime", nullable=true)
+     */
+    private $end;
+
+
+    /**
      * Get id.
      *
      * @return int
@@ -105,8 +152,15 @@ class Promo
      */
     public function setLangage($langage)
     {
-        $this->langage = $langage;
-
+        if ($langage == 'Symfony' || $langage == 'PHP'){
+            $this->langage = 'php';
+        } elseif ($langage == 'AngularJS' || $langage == 'JS' || $langage == 'React' || $langage == 'Angular'){
+            $this->langage = 'js';
+        } elseif ($langage == 'Java JEE' || $langage == 'Android'){
+            $this->langage = 'java';
+        } else{
+            $this->langage = 'undifined';
+        }
         return $this;
     }
 

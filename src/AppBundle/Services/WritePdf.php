@@ -54,7 +54,10 @@ class WritePdf
         $this->setSimpleTxt($pdf, utf8_decode($student->getName()), 75.5, 194);
         $this->setSimpleTxt($pdf, utf8_decode($student->getFirstname()), 75.5, 200);
         $this->setSimpleTxt($pdf, $student->getDateOfBirth()->format('d-m-Y'), 75.5, 206);
-        $this->setValidation($pdf, utf8_decode($student->getGender()), 90, 188.8, 110, 188.8);
+
+        if ($student->getGender() != 0){
+            $this->setValidation($pdf, utf8_decode($student->getGender()), 90, 188.8, 110, 188.8);
+        }
 
         // Page 2
         $tplIdx = $pdf->importPage(2);
@@ -78,7 +81,7 @@ class WritePdf
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 63);
+        $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 62);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 225);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 225);
 
@@ -89,8 +92,8 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
         $this->setValidation($pdf, $student->getValidateEvalSuppOne(), 16, 145, 16, 156);
-        $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppOne()), 19, 180);
-        $this->setSimpleTxt($pdf, utf8_decode('Grandjean Florian'), 37, 240);
+        $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppOne()), 19, 179);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 240);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 240);
 
 //        Import page 7
@@ -103,40 +106,39 @@ class WritePdf
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setValidation($pdf, $student->getValidateActivityTwo(), 16, 84, 16, 91);
-        $this->setLongText($pdf, utf8_decode($student->getCommActivityTwo()), 19, 117);
-        $this->setSimpleTxt($pdf, utf8_decode('Grandjean Florian'), 37, 203);
-        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 203);
+        $this->setValidation($pdf, $student->getValidateActivityTwo(), 16, 68, 16, 75);
+        $this->setLongText($pdf, utf8_decode($student->getCommActivityTwo()), 19, 100);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 187);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 187);
 
         // import page 9
         $tplIdx = $pdf->importPage(9);
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setValidation($pdf, $student->getValidateEvalSuppTwo(), 16, 165, 16, 175);
-        $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppTwo()), 19, 197);
+        $this->setValidation($pdf, $student->getValidateEvalSuppTwo(), 16, 151, 16, 161);
+        $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppTwo()), 19, 182);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 246);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 246);
 
         // import page 10
         $tplIdx = $pdf->importPage(10);
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setValidation($pdf, $student->getValidateActivityOne(), 16, 217, 16, 224);
-        $this->setValidation($pdf, $student->getValidateActivityTwo(), 16, 217, 16, 224);
+        $this->setValidation($pdf, $student->getValidateActivityOne(), 78, 182, 94, 145);
+        $this->setValidation($pdf, $student->getValidateActivityTwo(), 78, 145, 94, 182);
 
-//        Import page 11
+//         import page 11
         $tplIdx = $pdf->importPage(11);
-        $pdf->AddPage('P');
-        $pdf->useTemplate($tplIdx);
-
-//         import page 12
-        $tplIdx = $pdf->importPage(12);
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setLongText($pdf, utf8_decode($student->getObservationStudent()), 19, 73);
-        $this->setSimpleTxt($pdf, utf8_decode('Grandjean Florian'), 37, 153);
-        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 153);
+        $this->setLongText($pdf, utf8_decode($student->getObservationStudent()), 19, 72);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 154);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 154);
+
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 177);
 
         $filename = $student->getName() . '_' . $student->getFirstname() . '_ecf.pdf';
         if (!file_exists($this->output . str_replace(' ', '_', $student->getPromo()->getName()))) {

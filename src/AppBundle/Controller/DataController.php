@@ -29,7 +29,7 @@ class DataController extends Controller
      */
     private function getApiCrewData(){
         $client = new Client();
-        $res = $client->request('GET', 'https://ppody.innoveduc.fr/api/v2/crews', [
+        $res = $client->request('GET', 'https://odyssey.wildcodeschool.fr/api/v2/crews', [
             'headers' => [
                 'Authorization' => $this->getParameter('key_api_odyssey')
             ]
@@ -46,7 +46,7 @@ class DataController extends Controller
      */
     private function getApiStudentData($idCrew){
         $client = new Client();
-        $res = $client->request('GET', 'https://ppody.innoveduc.fr/api/v2/crews/' . $idCrew, [
+        $res = $client->request('GET', 'https://odyssey.wildcodeschool.fr/api/v2/crews/' . $idCrew, [
             'headers' => [
                 'Authorization' => $this->getParameter('key_api_odyssey')
             ]
@@ -64,61 +64,68 @@ class DataController extends Controller
         $crews = $this->getApiCrewData();
         $em = $this->getDoctrine()->getManager();
 
-//        TODO: Update gender and language
-        $language = ['PHP', 'JS', 'JAVA'];
-        $gender = [Student::MALE, Student::FEMALE];
+        $gender = ['Man' => Student::MALE, 'Woman' => Student::FEMALE];
 
         foreach ($crews as $crew){
-            $promo = $em->getRepository(Promo::class)->findOneBy(array('name' => $crew->name));
-            if ($promo == null){
-                $promo = new Promo();
-                $promo->setName($crew->name);
-                if (count($crew->trainers) > 0){
-                    $promo->setTrainer($crew->trainers[0]->fullname);
-                }
-
-//        TODO: Update language
-                $promo->setLangage($language[array_rand($language)]);
-
-                if (isset($crew->location->city)){
-                    $city = $em->getRepository(City::class)->findOneBy(array('name' => $crew->location->city));
-                    if ($city == null){
-                        $city = new City();
-                        $city->setName($crew->location->city);
-                        $em->persist($city);
-                        $em->flush();
-                    }
-                    $promo->setCity($city);
-                }
-
-                $em->persist($promo);
-
-                $students = $this->getApiStudentData($crew->id)->students;
-                foreach ($students as $student){
-                    $studentExist = $em->getRepository(Student::class)->findOneBy(array(
-                        'firstname' => $student->firstname,
-                        'name' => $student->lastname,
-                        'dateOfBirth' => new \DateTime($student->birthdate)
-                    ));
-                    if ($studentExist == null){
-                        $newStudent = new Student();
-                        $newStudent->setName($student->lastname);
-                        $newStudent->setFirstname($student->firstname);
-
-//        TODO: Update gender
-                        $newStudent->setGender($gender[array_rand($gender)]);
-                        $newStudent->setPromo($promo);
-                        $newStudent->setDateOfBirth(new \DateTime($student->birthdate));
-                        $em->persist($newStudent);
-                        $em->flush();
+            if (new \DateTime('2018-02-20') < new \DateTime($crew->start_date) && new \DateTime($crew->end_date) < new \DateTime('2018-08-01') && $crew->start_date != null){
+                $promo = $em->getRepository(Promo::class)->findOneBy(array('name' => $crew->name));
+                if ($promo == null){
+                    $promo = new Promo();
+                    $promo->setName($crew->name);
+                    if (count($crew->trainers) > 0){
+                        $promo->setTrainer($crew->trainers[0]->fullname);
                     }
 
+                    if (isset($crew->program_type)){
+                        $promo->setLangage($crew->program_type->name);
+                    } else {
+                        $promo->setLangage('undifined');
+                    }
+
+                    if (isset($crew->location->city)){
+                        $city = $em->getRepository(City::class)->findOneBy(array('name' => $crew->location->city));
+                        if ($city == null){
+                            $city = new City();
+                            $city->setName($crew->location->city);
+                            $em->persist($city);
+                            $em->flush();
+                        }
+                        $promo->setCity($city);
+                    }
+
+                    $em->persist($promo);
+
+                    $students = $this->getApiStudentData($crew->id)->students;
+                    foreach ($students as $student){
+                        $studentExist = $em->getRepository(Student::class)->findOneBy(array(
+                            'firstname' => $student->firstname,
+                            'name' => $student->lastname,
+                            'dateOfBirth' => new \DateTime($student->birthdate)
+                        ));
+                        if ($studentExist == null){
+                            $newStudent = new Student();
+                            $newStudent->setName($student->lastname);
+                            $newStudent->setFirstname($student->firstname);
+
+                            if ($student->gender != null) {
+                                $newStudent->setGender($gender[$student->gender]);
+                            } else {
+                                $newStudent->setGender(Student::GENDER_UNDEFINED);
+                            }
+                            $newStudent->setPromo($promo);
+                            $newStudent->setDateOfBirth(new \DateTime($student->birthdate));
+                            $em->persist($newStudent);
+                            $em->flush();
+                        }
+
+                    }
+                    $em->flush();
                 }
-                $em->flush();
             }
+
         }
         $this->addFlash('notice', 'Update BDD ok');
-
+//        return new Response('ok');
         return $this->redirectToRoute('homepage');
     }
 }

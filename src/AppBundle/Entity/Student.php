@@ -15,6 +15,7 @@ class Student
 {
     const MALE = 1;
     const FEMALE = 2;
+    const GENDER_UNDEFINED = 0;
 
     public function __construct()
     {
@@ -272,7 +273,7 @@ class Student
      */
     public function setCommActivityOne($commActivityOne)
     {
-        $this->commActivityOne = $commActivityOne;
+        $this->commActivityOne = trim(preg_replace('/\s+/', ' ', $commActivityOne));
 
         return $this;
     }
@@ -320,7 +321,7 @@ class Student
      */
     public function setCommEvalSuppOne($commEvalSuppOne)
     {
-        $this->commEvalSuppOne = $commEvalSuppOne;
+        $this->commEvalSuppOne = trim(preg_replace('/\s+/', ' ', $commEvalSuppOne));
 
         return $this;
     }
@@ -368,7 +369,7 @@ class Student
      */
     public function setCommActivityTwo($commActivityTwo)
     {
-        $this->commActivityTwo = $commActivityTwo;
+        $this->commActivityTwo = trim(preg_replace('/\s+/', ' ', $commActivityTwo));
 
         return $this;
     }
@@ -416,7 +417,7 @@ class Student
      */
     public function setCommEvalSuppTwo($commEvalSuppTwo)
     {
-        $this->commEvalSuppTwo = $commEvalSuppTwo;
+        $this->commEvalSuppTwo = trim(preg_replace('/\s+/', ' ', $commEvalSuppTwo));
 
         return $this;
     }
@@ -440,7 +441,7 @@ class Student
      */
     public function setObservationStudent($observationStudent)
     {
-        $this->observationStudent = $observationStudent;
+        $this->observationStudent = trim(preg_replace('/\s+/', ' ', $observationStudent));
 
         return $this;
     }
