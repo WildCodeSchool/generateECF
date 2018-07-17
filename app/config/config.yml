@@ -11,6 +11,7 @@ parameters:
     ecf_output: '%kernel.project_dir%/web/ecfOutput/'
     zip_directory: '%kernel.project_dir%/web/zipOutput/'
     api_key_odyssey: '%key_api_odyssey%'
+    sign_directory: '%kernel.project_dir%/web/uploads/sign'
 
 framework:
     #esi: ~

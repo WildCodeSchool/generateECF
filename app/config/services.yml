@@ -39,3 +39,7 @@ services:
 
     AppBundle\Services\Zip:
         arguments: ['%zip_directory%', '%ecf_output%']
+
+    AppBundle\Services\FileUploader:
+        arguments:
+            $targetDirectory: '%sign_directory%'

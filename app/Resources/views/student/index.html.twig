@@ -7,6 +7,45 @@
                 - {{ promo.city }}</h1>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            Trainer: {{ promo.trainer }}
+        </div>
+        <div class="col">
+            Sign Trainer:
+            {% if promo.signTrainer %}
+               <img width="100" src="{{ asset('uploads/sign/' ~ promo.signTrainer) }}" alt="Sign Trainer">
+            {% else %}
+                Undefined
+            {% endif %}
+        </div>
+        <div class="col">
+            Campus Manager:
+            {% if promo.campusManager %}
+                {{ promo.campusManager }}
+            {% else %}
+                Undefined
+            {% endif %}
+        </div>
+        <div class="col">
+            Sign CM:
+            {% if promo.signCM %}
+                <img width="100" src="{{ asset('uploads/sign/' ~ promo.signCM) }}" alt="Sign CM">
+            {% else %}
+                Undefined
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            Addres:
+            {% if promo.signCM %}
+                {{ promo.adress }}
+            {% else %}
+                Undefined
+            {% endif %}
+        </div>
+    </div>
     <div class="row justify-content-center mb-2">
         <div class="col-4">
             {% if (promo.adress) == null or (promo.campusManager == null)%}
@@ -17,6 +56,7 @@
                 <button class="btn btn-dark btn-lg btn-block" onclick='alert("Il faut que tu renseignes les infos sur ta promo")'
                    role="button"><i class="fa fa-download text-warning"></i> Telecharger le zip d'ecf</button>
             {% else %}
+                <p><a class="btn btn-primary btn-lg btn-block" href="{{ path('promo_edit', { 'id': promo.id }) }}">Custom ta promo</a></p>
                 <a class="btn btn-dark btn-lg btn-block" href="{{ path('generate_ecf', { 'promo': promo.id }) }}"
                 role="button"><i class="fa fa-download text-warning"></i> Telecharger le zip d'ecf</a>
             {% endif %}

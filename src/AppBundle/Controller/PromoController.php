@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Promo;
+use AppBundle\Services\FileUploader;
 use GuzzleHttp\Client;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -33,7 +34,7 @@ class PromoController extends Controller
      * @Route("/edit/{id}", name="promo_edit")
      * @Method({"GET", "POST"})
      */
-    public function editPromo(Promo $promo, Request $request){
+    public function editPromo(Promo $promo, Request $request, FileUploader $fileUploader){
 
         $client = new Client();
         $res = $client->request('GET', 'https://odyssey.wildcodeschool.fr/api/v2/crews', [
@@ -52,12 +53,35 @@ class PromoController extends Controller
             }
         }
 
+        $signT = $promo->getSignTrainer();
+        $signCM = $promo->getSignCM();
+
         $editForm = $this->createForm('AppBundle\Form\PromoType', $promo, array(
             'trainers' => $trainers
         ));
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            if ($promo->getSignTrainer() != null){
+                $file = $promo->getSignTrainer();
+                $fileName = $fileUploader->upload($file);
+                $promo->setSignTrainer($fileName);
+                unlink($this->getParameter('sign_directory') . '/' . $signT);
+            } else {
+                $promo->setSignTrainer($signT);
+            }
+            if ($promo->getSignCM() != null ){
+                $file = $promo->getSignCM();
+                $fileName = $fileUploader->upload($file);
+                $promo->setSignCM($fileName);
+                unlink($this->getParameter('sign_directory') . '/' . $signCM);
+            } else {
+                $promo->setSignCM($signCM);
+            }
+
+
+
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('notice', 'Promo mise a jour');
 

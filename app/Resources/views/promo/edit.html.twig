@@ -8,6 +8,82 @@
         <p class="h4 mb-3">{{ promo.city }}</p>
 
         <hr class="my-4">
-        {{ form(edit_form) }}
     </div>
+
+    <div class="contqiner">
+        {{ form_start(edit_form) }}
+
+        <div class="row">
+            <div class="col">
+                <div class="card mb-3">
+                    <div class="card-header h4 text-white bg-dark">Trainers</div>
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <p class="card-text">
+                            {{ form_row(edit_form.trainer) }}
+                        </p>
+                        <hr/>
+                        <div class="row">
+                            <div class="col">
+                                {{ form_row(edit_form.signTrainer) }}
+                            </div>
+                            {% if promo.signTrainer %}
+                                <div class="col">
+                                    <p>Actual sign Trainer</p>
+                                    <img width="100" src="{{ asset('uploads/sign/' ~ promo.signTrainer) }}" alt="sign Trainer">
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-3">
+                    <div class="card-header h4 text-white bg-dark">Campus Manager</div>
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <p class="card-text">
+                            {{ form_row(edit_form.campusManager) }}
+                        </p>
+                        <hr/>
+                        <div class="row">
+                            <div class="col">
+                                {{ form_row(edit_form.signCM) }}
+                            </div>
+                            {% if promo.signCM %}
+                                <div class="col">
+                                    <p>Actual sign Campus Manager</p>
+                                    <img width="100" src="{{ asset('uploads/sign/' ~ promo.signCM) }}" alt="sign CM">
+                                </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+                <p>{{ form_row(edit_form.trainer) }}</p>
+            </div>
+            <div class="col">
+                <p>{{ form_row(edit_form.campusManager) }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(edit_form.adress) }}
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <input class="btn btn-success btn-block btn-lg" type="submit" value="Edit"/>
+            </div>
+        </div>
+        {{ form_end(edit_form) }}
+    </div>
+
 {% endblock %}

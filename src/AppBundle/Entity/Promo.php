@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Promo
@@ -89,6 +91,21 @@ class Promo
      * @ORM\Column(name="adress", type="string", nullable=true)
      */
     private $adress;
+
+    /**
+     * @ORM\Column(name="sign_trainer", type="string", nullable=true)
+     *
+     * @Assert\File(mimeTypes={ "image/png" })
+     */
+    private $sign_trainer;
+
+
+    /**
+     * @ORM\Column(name="sign_cm", type="string", nullable=true)
+     *
+     * @Assert\File(mimeTypes={ "image/png" })
+     */
+    private $sign_cm;
 
     /**
      * Get id.
@@ -300,5 +317,43 @@ class Promo
     public function setAdress($adress)
     {
         $this->adress = $adress;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSignCM()
+    {
+        return $this->sign_cm;
+    }
+
+    /**
+     * @param $sign_cm
+     * @return $this
+     */
+    public function setSignCM($sign_cm)
+    {
+        $this->sign_cm = $sign_cm;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSignTrainer()
+    {
+        return $this->sign_trainer;
+    }
+
+    /**
+     * @param $sign_trainer
+     * @return $this
+     */
+    public function setSignTrainer($sign_trainer)
+    {
+        $this->sign_trainer = $sign_trainer;
+
+        return $this;
     }
 }
