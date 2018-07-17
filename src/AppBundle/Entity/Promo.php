@@ -63,38 +63,6 @@ class Promo
     private $trainer;
 
     /**
-     * @return \DateTime
-     */
-    public function getStart()
-    {
-        return $this->start;
-    }
-
-    /**
-     * @param \DateTime $start
-     */
-    public function setStart($start)
-    {
-        $this->start = $start;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getEnd()
-    {
-        return $this->end;
-    }
-
-    /**
-     * @param \DateTime $end
-     */
-    public function setEnd($end)
-    {
-        $this->end = $end;
-    }
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="start", type="datetime", nullable=true)
@@ -108,6 +76,19 @@ class Promo
      */
     private $end;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="campus_manager", type="string", nullable=true)
+     */
+    private $campus_manager;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="adress", type="string", nullable=true)
+     */
+    private $adress;
 
     /**
      * Get id.
@@ -255,5 +236,69 @@ class Promo
     public function setTrainer($trainer)
     {
         $this->trainer = $trainer;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * @param \DateTime $start
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * @param \DateTime $end
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCampusManager()
+    {
+        return $this->campus_manager;
+    }
+
+    /**
+     * @param \DateTime $campus_manager
+     */
+    public function setCampusManager($campus_manager)
+    {
+        $this->campus_manager = $campus_manager;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getAdress()
+    {
+        return $this->adress;
+    }
+
+    /**
+     * @param \DateTime $adress
+     */
+    public function setAdress($adress)
+    {
+        $this->adress = $adress;
     }
 }

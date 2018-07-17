@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron text-center">
+        <h1 class="display-5"><i class="fa fa-cogs"></i> Custom ta promo</h1>
+        <p class="h4 mb-3">{{ promo.name }}</p>
+        <p class="h4 mb-3">{{ promo.langage }}</p>
+        <p class="h4 mb-3">{{ promo.city }}</p>
+
+        <hr class="my-4">
+        {{ form(edit_form) }}
+    </div>
+{% endblock %}

@@ -125,7 +125,6 @@ class DataController extends Controller
 
         }
         $this->addFlash('notice', 'Update BDD ok');
-//        return new Response('ok');
         return $this->redirectToRoute('homepage');
     }
 }

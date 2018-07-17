@@ -50,10 +50,10 @@ class WritePdf
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setSimpleTxt($pdf, utf8_decode($student->getPromo()->getCity()->getName()), 75.5, 176);
-        $this->setSimpleTxt($pdf, utf8_decode($student->getName()), 75.5, 194);
-        $this->setSimpleTxt($pdf, utf8_decode($student->getFirstname()), 75.5, 200);
-        $this->setSimpleTxt($pdf, $student->getDateOfBirth()->format('d-m-Y'), 75.5, 206);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getAdress()), 75.5, 177);
+        $this->setSimpleTxt($pdf, utf8_decode($student->getName()), 75.5, 195);
+        $this->setSimpleTxt($pdf, utf8_decode($student->getFirstname()), 75.5, 201);
+        $this->setSimpleTxt($pdf, $student->getDateOfBirth()->format('d-m-Y'), 75.5, 207);
 
         if ($student->getGender() != 0){
             $this->setValidation($pdf, utf8_decode($student->getGender()), 90, 188.8, 110, 188.8);
@@ -82,8 +82,8 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
         $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 62);
-        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 225);
-        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 225);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 226);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 226);
 
 
 //         import page 6
@@ -106,20 +106,20 @@ class WritePdf
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setValidation($pdf, $student->getValidateActivityTwo(), 16, 68, 16, 75);
+        $this->setValidation($pdf, $student->getValidateActivityTwo(), 16, 69, 16, 76);
         $this->setLongText($pdf, utf8_decode($student->getCommActivityTwo()), 19, 100);
-        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 187);
-        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 187);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 188);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 188);
 
         // import page 9
         $tplIdx = $pdf->importPage(9);
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setValidation($pdf, $student->getValidateEvalSuppTwo(), 16, 151, 16, 161);
+        $this->setValidation($pdf, $student->getValidateEvalSuppTwo(), 16, 152, 16, 162);
         $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppTwo()), 19, 182);
-        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 246);
-        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 246);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 247);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 247);
 
         // import page 10
         $tplIdx = $pdf->importPage(10);
@@ -137,7 +137,7 @@ class WritePdf
         $this->setLongText($pdf, utf8_decode($student->getObservationStudent()), 19, 72);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 154);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 154);
-
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getCampusManager()), 37, 177.5);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 177);
 
         $filename = $student->getName() . '_' . $student->getFirstname() . '_ecf.pdf';

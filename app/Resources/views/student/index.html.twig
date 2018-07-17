@@ -9,8 +9,17 @@
     </div>
     <div class="row justify-content-center mb-2">
         <div class="col-4">
-            <a class="btn btn-dark btn-lg btn-block" href="{{ path('generate_ecf', { 'promo': promo.id }) }}"
-               role="button"><i class="fa fa-download text-warning"></i> Telecharger le zip d'ecf</a>
+            {% if (promo.adress) == null or (promo.campusManager == null)%}
+                <div class="alert alert-danger" role="alert">
+                    <p><strong>Des informations sur la promotions manquent pour te permettre de telecharger les ECF</strong></p>
+                    <p><a class="btn btn-primary btn-lg btn-block" href="{{ path('promo_edit', { 'id': promo.id }) }}">Custom ta promo</a></p>
+                </div>
+                <button class="btn btn-dark btn-lg btn-block" onclick='alert("Il faut que tu renseignes les infos sur ta promo")'
+                   role="button"><i class="fa fa-download text-warning"></i> Telecharger le zip d'ecf</button>
+            {% else %}
+                <a class="btn btn-dark btn-lg btn-block" href="{{ path('generate_ecf', { 'promo': promo.id }) }}"
+                role="button"><i class="fa fa-download text-warning"></i> Telecharger le zip d'ecf</a>
+            {% endif %}
         </div>
     </div>
 
