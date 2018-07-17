@@ -67,7 +67,10 @@ class PromoController extends Controller
                 $file = $promo->getSignTrainer();
                 $fileName = $fileUploader->upload($file);
                 $promo->setSignTrainer($fileName);
-                unlink($this->getParameter('sign_directory') . '/' . $signT);
+
+                if ($signT != null){
+                    unlink($this->getParameter('sign_directory') . $signT);
+                }
             } else {
                 $promo->setSignTrainer($signT);
             }
@@ -75,7 +78,10 @@ class PromoController extends Controller
                 $file = $promo->getSignCM();
                 $fileName = $fileUploader->upload($file);
                 $promo->setSignCM($fileName);
-                unlink($this->getParameter('sign_directory') . '/' . $signCM);
+
+                if ($signCM != null){
+                    unlink($this->getParameter('sign_directory') . $signCM);
+                }
             } else {
                 $promo->setSignCM($signCM);
             }

@@ -95,7 +95,12 @@ class Promo
     /**
      * @ORM\Column(name="sign_trainer", type="string", nullable=true)
      *
-     * @Assert\File(mimeTypes={ "image/png" })
+     * @Assert\File(
+     *     maxSize = "2048k",
+     *     mimeTypes={ "image/png" },
+     *     mimeTypesMessage = "Please upload a valid PNG",
+     *     maxSizeMessage="Please upload less than 2048k"
+     *     )
      */
     private $sign_trainer;
 
@@ -103,7 +108,12 @@ class Promo
     /**
      * @ORM\Column(name="sign_cm", type="string", nullable=true)
      *
-     * @Assert\File(mimeTypes={ "image/png" })
+     * @Assert\File(
+     *     maxSize = "2048k",
+     *     mimeTypes={ "image/png" },
+     *     mimeTypesMessage = "Please upload a valid PNG",
+     *     maxSizeMessage="Please upload less than 2048k"
+     *     )
      */
     private $sign_cm;
 

@@ -7,24 +7,24 @@
                 - {{ promo.city }}</h1>
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
         <div class="col">
-            Trainer: {{ promo.trainer }}
+            Trainer: <span class="alert alert-success">{{ promo.trainer }}</span>
         </div>
         <div class="col">
             Sign Trainer:
             {% if promo.signTrainer %}
                <img width="100" src="{{ asset('uploads/sign/' ~ promo.signTrainer) }}" alt="Sign Trainer">
             {% else %}
-                Undefined
+                <span class="alert alert-danger">Undefined</span>
             {% endif %}
         </div>
         <div class="col">
             Campus Manager:
             {% if promo.campusManager %}
-                {{ promo.campusManager }}
+                <span class="alert alert-success">{{ promo.campusManager }}</span>
             {% else %}
-                Undefined
+                <span class="alert alert-danger">Undefined</span>
             {% endif %}
         </div>
         <div class="col">
@@ -32,23 +32,21 @@
             {% if promo.signCM %}
                 <img width="100" src="{{ asset('uploads/sign/' ~ promo.signCM) }}" alt="Sign CM">
             {% else %}
-                Undefined
+                <span class="alert alert-danger">Undefined</span>
             {% endif %}
         </div>
-    </div>
-    <div class="row">
         <div class="col">
-            Addres:
-            {% if promo.signCM %}
-                {{ promo.adress }}
+            Adresse:
+            {% if promo.adress %}
+                <span class="alert alert-success">{{ promo.adress }}</span>
             {% else %}
-                Undefined
+                <span class="alert alert-danger">Undefined</span>
             {% endif %}
         </div>
     </div>
-    <div class="row justify-content-center mb-2">
+    <div class="row justify-content-center mb-2 mt-5">
         <div class="col-4">
-            {% if (promo.adress) == null or (promo.campusManager == null)%}
+            {% if (promo.adress) == null or (promo.campusManager == null) %}
                 <div class="alert alert-danger" role="alert">
                     <p><strong>Des informations sur la promotions manquent pour te permettre de telecharger les ECF</strong></p>
                     <p><a class="btn btn-primary btn-lg btn-block" href="{{ path('promo_edit', { 'id': promo.id }) }}">Custom ta promo</a></p>
@@ -89,10 +87,15 @@
                                role="button"><i class="fa fa-edit fa-lg text-dark"></i></a>
                         </th>
                         <th>
-                            <a class="btn btn-default"
-                               href="{{ path('generate_student_ecf', {'promo': promo.id, 'student': student.id }) }}"
-                               target="_blank"
-                               role="button"><i class="fas fa-download fa-lg text-dark"></i></a>
+                            {% if (promo.adress) == null or (promo.campusManager == null)%}
+                                <button class="btn btn-default" role="button" onclick='alert("Il faut que tu renseignes les infos sur ta promo")'><i class="fas fa-download fa-lg text-dark"></i>
+                                </button>
+                            {% else %}
+                                <a class="btn btn-default"
+                                   href="{{ path('generate_student_ecf', {'promo': promo.id, 'student': student.id }) }}"
+                                   target="_blank"
+                                   role="button"><i class="fas fa-download fa-lg text-dark"></i></a>
+                            {% endif %}
                         </th>
                         <td>{{ student.firstname }} {{ student.name|upper }}</td>
                         <td>

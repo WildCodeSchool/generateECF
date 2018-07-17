@@ -35,7 +35,7 @@ services:
     #         $someArgument: 'some_value'
 
     AppBundle\Services\WritePdf:
-        arguments: ['%template_directory%', '%ecf_output%']
+        arguments: ['%template_directory%', '%ecf_output%', '%sign_directory%']
 
     AppBundle\Services\Zip:
         arguments: ['%zip_directory%', '%ecf_output%']

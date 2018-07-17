@@ -16,20 +16,27 @@ class WritePdf
      * @var
      */
     private $template_directory;
+
     /**
      * @var
      */
     private $output;
 
     /**
+     * @var
+     */
+    private $signDirectory;
+
+    /**
      * WritePdf constructor.
      * @param $template_directory
      * @param $output
      */
-    public function __construct($template_directory, $output)
+    public function __construct($template_directory, $output, $signDirectory)
     {
         $this->template_directory = $template_directory;
         $this->output = $output;
+        $this->signDirectory = $signDirectory;
     }
 
     /**
@@ -84,7 +91,7 @@ class WritePdf
         $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 62);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 226);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 226);
-
+        $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 216,25);
 
 //         import page 6
         $tplIdx = $pdf->importPage(6);
@@ -95,6 +102,7 @@ class WritePdf
         $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppOne()), 19, 179);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 240);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 240);
+        $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 230,25);
 
 //        Import page 7
         $tplIdx = $pdf->importPage(7);
@@ -110,6 +118,8 @@ class WritePdf
         $this->setLongText($pdf, utf8_decode($student->getCommActivityTwo()), 19, 100);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 188);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 188);
+        $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 180,25);
+
 
         // import page 9
         $tplIdx = $pdf->importPage(9);
@@ -120,6 +130,7 @@ class WritePdf
         $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppTwo()), 19, 182);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 247);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 247);
+        $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 237,25);
 
         // import page 10
         $tplIdx = $pdf->importPage(10);
@@ -139,6 +150,9 @@ class WritePdf
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 154);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getCampusManager()), 37, 177.5);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 177);
+
+        $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 158, 146,25);
+        $this->setSign($pdf, $this->signDirectory . $promo->getSignCM(), 158, 169,25);
 
         $filename = $student->getName() . '_' . $student->getFirstname() . '_ecf.pdf';
         if (!file_exists($this->output . str_replace(' ', '_', $student->getPromo()->getName()))) {
@@ -186,5 +200,17 @@ class WritePdf
         $pdf->MultiCell(170,5,$comm);
         // Saut de ligne
         $pdf->Ln();
+    }
+
+    /**
+     * @param Fpdi $pdf
+     * @param $img
+     * @param $x
+     * @param $y
+     */
+    private function setSign(Fpdi $pdf, $img, $x, $y, $w){
+        if ($img != $this->signDirectory){
+            $pdf->Image($img,$x,$y,$w);
+        }
     }
 }
