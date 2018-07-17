@@ -48,7 +48,7 @@ class PromoController extends Controller
         foreach ($crews as $crew){
             if ($crew->name == $promo->getName()){
                 foreach ($crew->trainers as $t){
-                    $trainers[trim(preg_replace('/[^A-Za-z0-9\-]/', ' ', $t->fullname))] = trim(preg_replace('/[^A-Za-z0-9\-]/', ' ', $t->fullname));
+                    $trainers[trim(preg_replace('/[^A-Za-z0-9àáâãäåçèéêëìíîïðòóôõöùúûüýÿ\-]/', ' ', $t->fullname))] = trim(preg_replace('/[^A-Za-z0-9àáâãäåçèéêëìíîïðòóôõöùúûüýÿ\-]/', ' ', $t->fullname));
                 }
             }
         }
