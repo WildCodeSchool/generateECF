@@ -44,7 +44,7 @@ class WritePdf
      * @return string
      * @throws \setasign\Fpdi\PdfReader\PdfReaderException
      */
-    public function generatePdf(Student $student, Promo $promo){
+    public function generatePdfOldVersion(Student $student, Promo $promo){
         // initiate FPDI
         $pdf = new Fpdi();
         // set the source file
@@ -153,6 +153,131 @@ class WritePdf
 
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 158, 146,25);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignCM(), 158, 169,25);
+
+        $filename = $student->getName() . '_' . $student->getFirstname() . '_ecf.pdf';
+        if (!file_exists($this->output . str_replace(' ', '_', $student->getPromo()->getName()))) {
+            mkdir($this->output . str_replace(' ', '_', $student->getPromo()->getName()), 0777, true);
+        }
+
+        $name = $this->output . str_replace(' ', '_', $student->getPromo()->getName()) . '/' . $filename;
+        $pdf->Output('F', $name);
+        return $name;
+    }
+
+    /**
+     * @param Student $student
+     * @return string
+     * @throws \setasign\Fpdi\PdfReader\PdfReaderException
+     */
+    public function generatePdfNewVersion(Student $student, Promo $promo){
+        // initiate FPDI
+        $pdf = new Fpdi();
+        // set the source file
+        $pdf->setSourceFile($this->template_directory . "template_ecf_2.pdf");
+
+        // Generate page 1
+
+        // import page 1
+        $tplIdx = $pdf->importPage(1);
+        $pdf->AddPage('P');
+        // use the imported page
+        $pdf->useTemplate($tplIdx);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getAdress()), 75.5, 173);
+        $this->setSimpleTxt($pdf, utf8_decode($student->getName()), 75.5, 193);
+        $this->setSimpleTxt($pdf, utf8_decode($student->getFirstname()), 75.5, 199);
+        $this->setSimpleTxt($pdf, $student->getDateOfBirth()->format('d-m-Y'), 75.5, 205);
+
+        if ($student->getGender() != 0){
+            $this->setValidation($pdf, utf8_decode($student->getGender()), 90, 186.8, 110, 186.8);
+        }
+
+        // Page 2
+        $tplIdx = $pdf->importPage(2);
+        $pdf->AddPage('P');
+        $pdf->useTemplate($tplIdx);
+
+        // Page 3
+        $tplIdx = $pdf->importPage(3);
+        $pdf->AddPage('P');
+        $pdf->useTemplate($tplIdx);
+
+        // import page 4
+        $tplIdx = $pdf->importPage(4);
+        $pdf->AddPage('P');
+        // use the imported page
+        $pdf->useTemplate($tplIdx);
+
+//         import page 5
+        $tplIdx = $pdf->importPage(5);
+        $pdf->AddPage('P');
+        // use the imported page
+        $pdf->useTemplate($tplIdx);
+        $this->setValidation($pdf, $student->getValidateActivityOne(), 15, 71.4, 15, 79);
+        $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 102);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 245);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 245);
+        $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 236,25);
+
+//         import page 6
+        $tplIdx = $pdf->importPage(6);
+        $pdf->AddPage('P');
+        // use the imported page
+        $pdf->useTemplate($tplIdx);
+        $this->setValidation($pdf, $student->getValidateEvalSuppOne(), 16, 159.4, 16, 167);
+        $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppOne()), 19, 186);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 251);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 251);
+        $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 243,25);
+
+//        Import page 7
+        $tplIdx = $pdf->importPage(7);
+        $pdf->AddPage('P');
+        $pdf->useTemplate($tplIdx);
+
+// import page 8
+        $tplIdx = $pdf->importPage(8);
+        $pdf->AddPage('P');
+        // use the imported page
+        $pdf->useTemplate($tplIdx);
+        $this->setValidation($pdf, $student->getValidateActivityTwo(), 15, 66, 15, 73);
+        $this->setLongText($pdf, utf8_decode($student->getCommActivityTwo()), 19, 97);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 250);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 250);
+        $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 240,25);
+
+
+        // import page 9
+        $tplIdx = $pdf->importPage(9);
+        $pdf->AddPage('P');
+        // use the imported page
+        $pdf->useTemplate($tplIdx);
+        $this->setValidation($pdf, $student->getValidateEvalSuppTwo(), 16, 157, 16, 165);
+        $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppTwo()), 19, 182);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 248);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 248);
+        $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 238,25);
+
+        // import page 10
+        $tplIdx = $pdf->importPage(10);
+        $pdf->AddPage('P');
+        // use the imported page
+        $pdf->useTemplate($tplIdx);
+        $this->setValidation($pdf, $student->getValidateActivityOne(), 75, 142, 94, 142);
+        $this->setValidation($pdf, $student->getValidateActivityTwo(), 75, 184, 94, 184);
+
+//         import page 11
+        $tplIdx = $pdf->importPage(11);
+        $pdf->AddPage('P');
+        // use the imported page
+        $pdf->useTemplate($tplIdx);
+        $this->setLongText($pdf, utf8_decode($student->getObservationStudent()), 19, 70);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 151);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 151);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getCampusManager()), 37, 174.5);
+        $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 174);
+
+        $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 156, 142,25);
+        $this->setSign($pdf, $this->signDirectory . $promo->getSignCM(), 156, 164,25);
 
         $filename = $student->getName() . '_' . $student->getFirstname() . '_ecf.pdf';
         if (!file_exists($this->output . str_replace(' ', '_', $student->getPromo()->getName()))) {

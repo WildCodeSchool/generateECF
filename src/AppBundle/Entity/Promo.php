@@ -15,6 +15,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Promo
 {
 
+    const OLD_ECF = 1;
+    const NEW_ECF = 2;
+
     public function __toString()
     {
         return $this->getName();
@@ -116,6 +119,13 @@ class Promo
      *     )
      */
     private $sign_cm;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="ecf_version", type="integer", nullable=true)
+     */
+    private $ecf_version;
 
     /**
      * Get id.
@@ -365,5 +375,21 @@ class Promo
         $this->sign_trainer = $sign_trainer;
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEcfVersion()
+    {
+        return $this->ecf_version;
+    }
+
+    /**
+     * @param int $ecf_version
+     */
+    public function setEcfVersion($ecf_version)
+    {
+        $this->ecf_version = $ecf_version;
     }
 }

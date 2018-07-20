@@ -34,3 +34,6 @@ body {
     border:0px solid darkslategrey;
 }
 
+#showMoreActivityOne, #showMoreActivityTwo{
+    display: none;
+}

@@ -59,8 +59,14 @@ class HomeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $students = $em->getRepository(Student::class)->findBy(array('promo' => $promo));
 
-        foreach ($students as $student) {
-            $writePdf->generatePdf($student, $promo);
+        if ($promo->getEcfVersion() == Promo::OLD_ECF){
+            foreach ($students as $student) {
+                $writePdf->generatePdfOldVersion($student, $promo);
+            }
+        } else{
+            foreach ($students as $student) {
+                $writePdf->generatePdfNewVersion($student, $promo);
+            }
         }
 
         $zipInfos = $zip->zipFolder($promo);
@@ -81,6 +87,25 @@ class HomeController extends Controller
      */
     public function generateStudentPdf(Promo $promo, Student $student, WritePdf $writePdf)
     {
-        return new BinaryFileResponse($writePdf->generatePdf($student, $promo));
+        if ($promo->getEcfVersion() == Promo::OLD_ECF){
+            return new BinaryFileResponse($writePdf->generatePdfOldVersion($student, $promo));
+
+        } else{
+            return new BinaryFileResponse($writePdf->generatePdfNewVersion($student, $promo));
+        }
+    }
+
+    /**
+     * @param Promo $promo
+     * @return BinaryFileResponse
+     *
+     * @Route("/download/template", name="downloadTemplate")
+     */
+    public function downloadTemplateAction(Promo $promo){
+        if ($promo->getEcfVersion() == Promo::OLD_ECF){
+            return new BinaryFileResponse($this->getParameter('template_directory' . 'template.pdf'));
+        } else{
+            return new BinaryFileResponse($this->getParameter('template_directory' . 'template_ecf_2.pdf'));
+        }
     }
 }

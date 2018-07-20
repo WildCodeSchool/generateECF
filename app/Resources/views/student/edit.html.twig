@@ -23,13 +23,57 @@
                 </div>
             </div>
         </div>
+        <div class="col float-right">
+            <div class="row">
+                <p>
+                    Version ECF:
+                    {% if student.promo.ecfVersion == constant('AppBundle\\Entity\\Promo::NEW_ECF') %}
+                        <span class="alert alert-success">Developpeur Web et Mobile (nouvelle version)</span>
+                    {% elseif student.promo.ecfVersion == constant('AppBundle\\Entity\\Promo::OLD_ECF') %}
+                        <span class="alert alert-success">Developpeur Logiciel (ancienne version)</span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="row">
+                <a class="btn btn-success" href="{{ path('downloadTemplate') }}">Telecharger le template du livret ECF</a>
+            </div>
+        </div>
     </div>
 
     {{ form_start(edit_form) }}
     <div class="row">
         <div class="col">
             <div class="card mb-3">
-                <div class="card-header h4 text-white bg-dark">Activity one</div>
+                {% if student.promo.ecfVersion == constant('AppBundle\\Entity\\Promo::NEW_ECF') %}
+                    <div class="card-header h4 text-white bg-dark">
+                        <p>Développer la partie back-end d’une application web ou webmobile en intégrant les recommandations de sécurité<button data-type="showMoreActivityOne" type="button" class="showMore float-right btn btn-info">En savoir plus</button></p>
+                    </div>
+                    <div id="showMoreActivityOne">
+                        <ol>
+                            <strong>Compétences:</strong>
+                            <li>Maquetter une application</li>
+                            <li>Réaliser une interface utilisateur web statique et adaptable</li>
+                            <li>Développer une interface utilisateur web dynamique</li>
+                            <li>Réaliser une interface utilisateur avec une solution de gestion de contenu ou e-commerce</li>
+                        </ol>
+                        <hr/>
+                    </div>
+                {% elseif student.promo.ecfVersion == constant('AppBundle\\Entity\\Promo::OLD_ECF') %}
+                    <div class="card-header h4 text-white bg-dark">
+                        <p>Développer une application client - serveur <button data-type="showMoreActivityOne" type="button" class="showMore float-right btn btn-info">En savoir plus</button></p>
+                    </div>
+                    <div id="showMoreActivityOne">
+                        <ol>
+                            <strong>Compétences:</strong>
+                            <li>Maquetter une application</li>
+                            <li>Concevoir une base de données</li>
+                            <li>Mettre en place une base de données</li>
+                            <li>Développer une interface utilisateur</li>
+                            <li>Développer des composants d'accès aux données</li>
+                        </ol>
+                        <hr/>
+                    </div>
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title"></h5>
                     <p class="card-text">
@@ -42,12 +86,39 @@
                         {{ form_row(edit_form.validateEvalSuppOne) }}
                     </p>
                 </div>
-
             </div>
         </div>
         <div class="col">
             <div class="card mb-3">
-                <div class="card-header h4 text-white bg-dark">Activity two</div>
+                {% if student.promo.ecfVersion == constant('AppBundle\\Entity\\Promo::NEW_ECF') %}
+                    <div class="card-header h4 text-white bg-dark">
+                        <p>Développer la partie front-end d’une application web ou web mobile en intégrant les recommandations de sécurité<button data-type="showMoreActivityTwo" type="button" class="showMore float-right btn btn-info">En savoir plus</button></p>
+                    </div>
+                    <div id="showMoreActivityTwo">
+                        <ol>
+                            <strong>Competences</strong>
+                            <li>Créer une base de données</li>
+                            <li>Développer les composants d’accès aux données</li>
+                            <li>Développer la partie back-end d’une application Web ou Web Mobile</li>
+                            <li>Elaborer et mettre en œuvre des composants dans une application de gestion de contenu ou e-commerce</li>
+                        </ol>
+                        <hr/>
+                    </div>
+                {% elseif student.promo.ecfVersion == constant('AppBundle\\Entity\\Promo::OLD_ECF') %}
+                    <div class="card-header h4 text-white bg-dark">
+                        <p>Développer une application web <button data-type="showMoreActivityTwo" type="button" class="showMore float-right btn btn-info">En savoir plus</button></p>
+                    </div>
+                    <div id="showMoreActivityTwo">
+                        <ol>
+                            <strong>Competences</strong>
+                            <li>Développer des pages web en lien avec une base de données</li>
+                            <li>Mettre en œuvre une solution de gestion de contenu ou e-commerce</li>
+                            <li>Développer une application simple de mobilité numérique</li>
+                            <li>Utiliser l’anglais dans son activité professionnelle en informatique</li>
+                        </ol>
+                        <hr/>
+                    </div>
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title"></h5>
                     <p class="card-text">
@@ -66,7 +137,7 @@
     <div class="row">
         <div class="col">
             <div class="card mb-3">
-                <div class="card-header h4 text-white bg-dark">Observations</div>
+                <div class="card-header h4 text-white bg-dark">Observation generale</div>
                 <div class="card-body">
                     <h5 class="card-title"></h5>
                     <p class="card-text">
@@ -87,4 +158,14 @@
     <a class="btn btn-outline btn-outline-dark" href="{{ path('student_index', { 'promo': student.promo.id }) }}">Back to the
         list</a>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $('.showMore').click(function(e){
+            e.preventDefault();
+            let type = $(this).data('type');
+            $('#' + type).slideToggle();
+        });
+    </script>
 {% endblock %}

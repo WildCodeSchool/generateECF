@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Promo;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -28,7 +29,8 @@ class PromoType extends AbstractType
                 'attr' => array(
                     'placeholder' => 'Reseigne l\'adresse exact de ton ecole, ex: 11 rue de Poissy, 75005, Paris'
                 ),
-                'required' => true
+                'required' => true,
+                'label' => 'Adresse du campus'
             ))
             ->add('signTrainer', FileType::class, array(
                 'label' => 'Sign Trainer (PNG file)',
@@ -39,6 +41,13 @@ class PromoType extends AbstractType
                 'label' => 'Sign Campus manager (PNG file)',
                 'data_class' => null,
                 'required' => false
+            ))
+            ->add('ecfVersion', ChoiceType::class, array(
+                'label' => ' Version de l\'ECF',
+                'choices' => array(
+                    'Developpeur Web et Mobile (nouvelle version)' => Promo::NEW_ECF,
+                    'Developpeur Logiciel (ancienne version)' => Promo::OLD_ECF
+                )
             ))
         ;
     }

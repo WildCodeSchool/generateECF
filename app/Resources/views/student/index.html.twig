@@ -7,7 +7,7 @@
                 - {{ promo.city }}</h1>
         </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-4">
         <div class="col">
             Trainer: <span class="alert alert-success">{{ promo.trainer }}</span>
         </div>
@@ -19,6 +19,8 @@
                 <span class="alert alert-danger">Undefined</span>
             {% endif %}
         </div>
+    </div>
+    <div class="row mt-4">
         <div class="col">
             Campus Manager:
             {% if promo.campusManager %}
@@ -36,7 +38,7 @@
             {% endif %}
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-4">
         <div class="col">
             Adresse:
             {% if promo.adress %}
@@ -45,10 +47,22 @@
                 <span class="alert alert-danger">Undefined</span>
             {% endif %}
         </div>
+        <div class="col">
+            Version ECF:
+            {% if promo.ecfVersion %}
+                {% if promo.ecfVersion == constant('AppBundle\\Entity\\Promo::NEW_ECF') %}
+                    <span class="alert alert-success">Developpeur Web et Mobile (nouvelle version)</span>
+                {% elseif promo.ecfVersion == constant('AppBundle\\Entity\\Promo::OLD_ECF') %}
+                    <span class="alert alert-success">Developpeur Logiciel (ancienne version)</span>
+                {% endif %}
+            {% else %}
+                    <span class="alert alert-danger">Undefined</span>
+            {% endif %}
+        </div>
     </div>
     <div class="row justify-content-center mb-2 mt-5">
         <div class="col-4">
-            {% if (promo.adress) == null or (promo.campusManager == null) %}
+            {% if (promo.adress) == null or (promo.campusManager == null) or (promo.ecfVersion == null) %}
                 <div class="alert alert-danger" role="alert">
                     <p><strong>Des informations sur la promotions manquent pour te permettre de telecharger les ECF</strong></p>
                     <p><a class="btn btn-primary btn-lg btn-block" href="{{ path('promo_edit', { 'id': promo.id }) }}">Custom ta promo</a></p>
@@ -83,22 +97,28 @@
                 <tbody>
                 {% for student in students %}
                     <tr>
-                        <th>
-                            <a class="btn btn-default"
-                               href="{{ path('student_edit', { 'promo': promo.id, 'student': student.id }) }}"
-                               role="button"><i class="fa fa-edit fa-lg text-dark"></i></a>
-                        </th>
-                        <th>
-                            {% if (promo.adress) == null or (promo.campusManager == null)%}
+                        {% if (promo.adress) == null or (promo.campusManager == null)  or (promo.ecfVersion == null) %}
+                            <th>
+                                <button class="btn btn-default" role="button" onclick='alert("Il faut que tu renseignes les infos sur ta promo")'><i class="fa fa-edit fa-lg text-dark"></i>
+                            </button>
+                            </th>
+                            <th>
                                 <button class="btn btn-default" role="button" onclick='alert("Il faut que tu renseignes les infos sur ta promo")'><i class="fas fa-download fa-lg text-dark"></i>
                                 </button>
-                            {% else %}
+                            </th>
+                        {% else %}
+                            <th>
+                                <a class="btn btn-default"
+                                   href="{{ path('student_edit', { 'promo': promo.id, 'student': student.id }) }}"
+                                   role="button"><i class="fa fa-edit fa-lg text-dark"></i></a>
+                            </th>
+                            <th>
                                 <a class="btn btn-default"
                                    href="{{ path('generate_student_ecf', {'promo': promo.id, 'student': student.id }) }}"
                                    target="_blank"
                                    role="button"><i class="fas fa-download fa-lg text-dark"></i></a>
-                            {% endif %}
-                        </th>
+                            </th>
+                        {% endif %}
                         <td>{{ student.firstname }} {{ student.name|upper }}</td>
                         <td>
                             <i class="float-left mr-1 fas fa-{{ student.validateActivityOne ? 'check text-success' : 'times text-danger' }}"></i>

@@ -3,14 +3,12 @@
 {% block body %}
     <div class="jumbotron text-center">
         <h1 class="display-5"><i class="fa fa-cogs"></i> Custom ta promo</h1>
-        <p class="h4 mb-3">{{ promo.name }}</p>
-        <p class="h4 mb-3">{{ promo.langage }}</p>
-        <p class="h4 mb-3">{{ promo.city }}</p>
-
-        <hr class="my-4">
+        <p class="h4 mb-2">{{ promo.name }}</p>
+        <p class="h4 mb-2">{{ promo.langage }}</p>
+        <p class="h4 mb-2">{{ promo.city }}</p>
     </div>
 
-    <div class="contqiner">
+    <div class="container-fluid">
         <div class="alert alert-success">
             <p class="text-center">Pour convertir vos sign en png et les rendre transparente, un petit site sympa et simple: <a
                         href="https://www110.lunapic.com/editor/?action=transparent">Lunapic</a></p>
@@ -66,23 +64,16 @@
                 </div>
             </div>
         </div>
-
-
-        <div class="row">
-            <div class="col">
-                <p>{{ form_row(edit_form.trainer) }}</p>
-            </div>
-            <div class="col">
-                <p>{{ form_row(edit_form.campusManager) }}</p>
-            </div>
-        </div>
         <div class="row">
             <div class="col">
                 {{ form_row(edit_form.adress) }}
             </div>
+            <div class="col">
+                {{ form_row(edit_form.ecfVersion) }}
+            </div>
         </div>
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mb-5">
             <div class="col-6">
                 <input class="btn btn-success btn-block btn-lg" type="submit" value="Edit"/>
             </div>
