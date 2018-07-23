@@ -21,40 +21,26 @@ class StudentType extends AbstractType
     {
         $builder
             ->add('validateActivityOne', CheckboxType::class, array(
-                'label' => "Validation activitee 1"
+                'label' => "Validation activitee 1",
+                'required' => false
             ))
             ->add('commActivityOne', TextareaType::class, array(
                 'attr' => array(
                     'maxlength' => 815,
                 ),
-                'label' => "Commentaire pour l'activitee type 1"
-            ))
-            ->add('validateEvalSuppOne', CheckboxType::class, array(
-                'label' => "Validation evaluation supplementaire 1"
-            ))
-            ->add('commEvalSuppOne', TextareaType::class, array(
-                'attr' => array(
-                    'maxlength' => 815,
-                ),
-                'label' => "Commentaire pour les evaluations supplementaire 1"
+                'label' => "Commentaire pour l'activitee type 1",
+                'required' => false
             ))
             ->add('validateActivityTwo', CheckboxType::class, array(
-                'label' => "Validation activitee 2"
+                'label' => "Validation activitee 2",
+                'required' => false
             ))
             ->add('commActivityTwo', TextareaType::class, array(
                 'attr' => array(
                     'maxlength' => 815,
                 ),
-                'label' => "Commentaire pour l'activitee type 2"
-            ))
-            ->add('validateEvalSuppTwo', CheckboxType::class, array(
-                'label' => "Validation evaluation supplementaire 2"
-            ))
-            ->add('commEvalSuppTwo', TextareaType::class, array(
-                'attr' => array(
-                    'maxlength' => 815,
-                ),
-                'label' => "Commentaire pour les evaluations supplementaire 1"
+                'label' => "Commentaire pour l'activitee type 2",
+                'required' => false
             ))
             ->add('observationStudent', TextareaType::class, array(
                 'attr' => array(

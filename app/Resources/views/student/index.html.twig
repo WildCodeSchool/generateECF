@@ -77,73 +77,66 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col">
+    <div class="container">
+        <div class="row">
+            <div class="col">
 
 
-            <table class="table table-striped table-hover table-responsive">
-                <thead class="bg-dark text-white">
-                <tr>
-                    <th>Edit</th>
-                    <th>Download ECF</th>
-                    <th>Name</th>
-                    <th>Activity one</th>
-                    <th>Eval supp one</th>
-                    <th>Activity two</th>
-                    <th>Eval supp two</th>
-                    <th>Observation student</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for student in students %}
+                <table class="table table-striped table-hover table-responsive">
+                    <thead class="bg-dark text-white">
                     <tr>
-                        {% if (promo.adress) == null or (promo.campusManager == null)  or (promo.ecfVersion == null) %}
-                            <th>
-                                <button class="btn btn-default" role="button" onclick='alert("Il faut que tu renseignes les infos sur ta promo")'><i class="fa fa-edit fa-lg text-dark"></i>
-                            </button>
-                            </th>
-                            <th>
-                                <button class="btn btn-default" role="button" onclick='alert("Il faut que tu renseignes les infos sur ta promo")'><i class="fas fa-download fa-lg text-dark"></i>
-                                </button>
-                            </th>
-                        {% else %}
-                            <th>
-                                <a class="btn btn-default"
-                                   href="{{ path('student_edit', { 'promo': promo.id, 'student': student.id }) }}"
-                                   role="button"><i class="fa fa-edit fa-lg text-dark"></i></a>
-                            </th>
-                            <th>
-                                <a class="btn btn-default"
-                                   href="{{ path('generate_student_ecf', {'promo': promo.id, 'student': student.id }) }}"
-                                   target="_blank"
-                                   role="button"><i class="fas fa-download fa-lg text-dark"></i></a>
-                            </th>
-                        {% endif %}
-                        <td>{{ student.firstname }} {{ student.name|upper }}</td>
-                        <td>
-                            <i class="float-left mr-1 fas fa-{{ student.validateActivityOne ? 'check text-success' : 'times text-danger' }}"></i>
-                            <p class="small text-muted">{{ student.commActivityOne|slice(1, 50) ~ '...' }}</p>
-                        </td>
-                        <td>
-                            <i class="float-left mr-1 fas fa-{{ student.validateEvalSuppOne ? 'check text-success' : 'times text-danger' }}"></i>
-                            <p class="small text-muted">{{ student.commEvalSuppOne|slice(1, 50) ~ '...' }}</p>
-                        </td>
-                        <td>
-                            <i class="float-left mr-1 fas fa-{{ student.validateActivityTwo ? 'check text-success' : 'times text-danger' }}"></i>
-                            <p class="small text-muted">{{ student.commActivityTwo|slice(1, 50) ~ '...' }}</p>
-                        </td>
-                        <td>
-                            <i class="float-left mr-1 fas fa-{{ student.validateEvalSuppTwo ? 'check text-success' : 'times text-danger' }}"></i>
-                            <p class="small text-muted">{{ student.commEvalSuppTwo|slice(1, 50) ~ '...' }}</p>
-                        </td>
-
-                        <td class="small">{{ student.observationStudent|slice(1, 50) ~ '...' }}</td>
-
+                        <th>Edit</th>
+                        <th>Download ECF</th>
+                        <th>Name</th>
+                        <th>Activity one</th>
+                        <th>Activity two</th>
+                        <th>Observation student</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for student in students %}
+                        <tr>
+                            {% if (promo.adress) == null or (promo.campusManager == null)  or (promo.ecfVersion == null) %}
+                                <th>
+                                    <button class="btn btn-default" role="button" onclick='alert("Il faut que tu renseignes les infos sur ta promo")'><i class="fa fa-edit fa-lg text-dark"></i>
+                                    </button>
+                                </th>
+                                <th>
+                                    <button class="btn btn-default" role="button" onclick='alert("Il faut que tu renseignes les infos sur ta promo")'><i class="fas fa-download fa-lg text-dark"></i>
+                                    </button>
+                                </th>
+                            {% else %}
+                                <th>
+                                    <a class="btn btn-default"
+                                       href="{{ path('student_edit', { 'promo': promo.id, 'student': student.id }) }}"
+                                       role="button"><i class="fa fa-edit fa-lg text-dark"></i></a>
+                                </th>
+                                <th>
+                                    <a class="btn btn-default"
+                                       href="{{ path('generate_student_ecf', {'promo': promo.id, 'student': student.id }) }}"
+                                       target="_blank"
+                                       role="button"><i class="fas fa-download fa-lg text-dark"></i></a>
+                                </th>
+                            {% endif %}
+                            <td>{{ student.firstname }} {{ student.name|upper }}</td>
+                            <td>
+                                <i class="float-left mr-1 fas fa-{{ student.validateActivityOne ? 'check text-success' : 'times text-danger' }}"></i>
+                                <p class="small text-muted">{{ student.commActivityOne|slice(1, 50) ~ '...' }}</p>
+                            </td>
+                            <td>
+                                <i class="float-left mr-1 fas fa-{{ student.validateActivityTwo ? 'check text-success' : 'times text-danger' }}"></i>
+                                <p class="small text-muted">{{ student.commActivityTwo|slice(1, 50) ~ '...' }}</p>
+                            </td>
+
+                            <td class="small">{{ student.observationStudent|slice(1, 50) ~ '...' }}</td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
 
 {% endblock %}

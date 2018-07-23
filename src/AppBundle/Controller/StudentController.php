@@ -50,6 +50,9 @@ class StudentController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            $student->setValidateEvalSuppOne($student->getValidateActivityOne());
+            $student->setValidateEvalSuppTwo($student->getValidateActivityTwo());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('student_index', array('promo' => $promo->getId()));
