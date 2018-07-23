@@ -99,13 +99,13 @@ class HomeController extends Controller
      * @param Promo $promo
      * @return BinaryFileResponse
      *
-     * @Route("/download/template", name="downloadTemplate")
+     * @Route("/download/template/promo/{promo}", name="downloadTemplate")
      */
     public function downloadTemplateAction(Promo $promo){
         if ($promo->getEcfVersion() == Promo::OLD_ECF){
-            return new BinaryFileResponse($this->getParameter('template_directory' . 'template.pdf'));
+            return new BinaryFileResponse($this->getParameter('template_directory') . 'template.pdf');
         } else{
-            return new BinaryFileResponse($this->getParameter('template_directory' . 'template_ecf_2.pdf'));
+            return new BinaryFileResponse($this->getParameter('template_directory') . 'template_ecf_2.pdf');
         }
     }
 }

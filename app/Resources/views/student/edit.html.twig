@@ -35,7 +35,7 @@
                 </p>
             </div>
             <div class="row">
-                <a class="btn btn-success" href="{{ path('downloadTemplate') }}">Telecharger le template du livret ECF</a>
+                <a class="btn btn-success" target="_blank" href="{{ path('downloadTemplate', {'promo': student.promo.id }) }}">Telecharger le template du livret ECF</a>
             </div>
         </div>
     </div>
