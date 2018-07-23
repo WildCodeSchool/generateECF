@@ -121,11 +121,11 @@
                             <td>{{ student.firstname }} {{ student.name|upper }}</td>
                             <td>
                                 <i class="float-left mr-1 fas fa-{{ student.validateActivityOne ? 'check text-success' : 'times text-danger' }}"></i>
-                                <p class="small text-muted">{{ student.commActivityOne|slice(1, 50) ~ '...' }}</p>
+                                <p class="small text-muted">{{ student.commActivityOne|slice(0, 50) ~ '...' }}</p>
                             </td>
                             <td>
                                 <i class="float-left mr-1 fas fa-{{ student.validateActivityTwo ? 'check text-success' : 'times text-danger' }}"></i>
-                                <p class="small text-muted">{{ student.commActivityTwo|slice(1, 50) ~ '...' }}</p>
+                                <p class="small text-muted">{{ student.commActivityTwo|slice(0, 50) ~ '...' }}</p>
                             </td>
 
                             <td class="small">{{ student.observationStudent|slice(1, 50) ~ '...' }}</td>
