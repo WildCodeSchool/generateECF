@@ -96,18 +96,6 @@ class Student
     private $validateEvalSuppOne;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="commEvalSuppOne", type="text", nullable=true)
-     *
-     * @Assert\Length(
-     *      max = 815,
-     *      maxMessage = "Your commEvalSuppOne cannot be longer than {{ limit }} characters"
-     * )
-     */
-    private $commEvalSuppOne;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="validateActivityTwo", type="boolean")
@@ -132,18 +120,6 @@ class Student
      * @ORM\Column(name="validateEvalSuppTwo", type="boolean")
      */
     private $validateEvalSuppTwo;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="commEvalSuppTwo", type="text", nullable=true)
-     *
-     * @Assert\Length(
-     *      max = 815,
-     *      maxMessage = "Your commEvalSuppTwo cannot be longer than {{ limit }} characters"
-     * )
-     */
-    private $commEvalSuppTwo;
 
     /**
      * @var string
@@ -313,30 +289,6 @@ class Student
     }
 
     /**
-     * Set commEvalSuppOne
-     *
-     * @param string $commEvalSuppOne
-     *
-     * @return Student
-     */
-    public function setCommEvalSuppOne($commEvalSuppOne)
-    {
-        $this->commEvalSuppOne = trim(preg_replace('/\s+/', ' ', $commEvalSuppOne));
-
-        return $this;
-    }
-
-    /**
-     * Get commEvalSuppOne
-     *
-     * @return string
-     */
-    public function getCommEvalSuppOne()
-    {
-        return $this->commEvalSuppOne;
-    }
-
-    /**
      * Set validateActivityTwo
      *
      * @param boolean $validateActivityTwo
@@ -406,30 +358,6 @@ class Student
     public function getValidateEvalSuppTwo()
     {
         return $this->validateEvalSuppTwo;
-    }
-
-    /**
-     * Set commEvalSuppTwo
-     *
-     * @param string $commEvalSuppTwo
-     *
-     * @return Student
-     */
-    public function setCommEvalSuppTwo($commEvalSuppTwo)
-    {
-        $this->commEvalSuppTwo = trim(preg_replace('/\s+/', ' ', $commEvalSuppTwo));
-
-        return $this;
-    }
-
-    /**
-     * Get commEvalSuppTwo
-     *
-     * @return string
-     */
-    public function getCommEvalSuppTwo()
-    {
-        return $this->commEvalSuppTwo;
     }
 
     /**

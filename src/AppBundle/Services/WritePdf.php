@@ -99,7 +99,6 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
         $this->setValidation($pdf, $student->getValidateEvalSuppOne(), 16, 145, 16, 156);
-        $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppOne()), 19, 179);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 240);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 240);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 230,25);
@@ -127,7 +126,6 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
         $this->setValidation($pdf, $student->getValidateEvalSuppTwo(), 16, 152, 16, 162);
-        $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppTwo()), 19, 182);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 247);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 247);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 237,25);
@@ -224,7 +222,6 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
         $this->setValidation($pdf, $student->getValidateEvalSuppOne(), 16, 159.4, 16, 167);
-        $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppOne()), 19, 186);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 251);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 251);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 243,25);
@@ -252,7 +249,6 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
         $this->setValidation($pdf, $student->getValidateEvalSuppTwo(), 16, 157, 16, 165);
-        $this->setLongText($pdf, utf8_decode($student->getCommEvalSuppTwo()), 19, 182);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 248);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 248);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 238,25);
