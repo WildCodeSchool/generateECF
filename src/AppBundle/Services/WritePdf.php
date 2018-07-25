@@ -88,7 +88,7 @@ class WritePdf
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-        $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 62);
+//        $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 62);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 226);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 226);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 216,25);
@@ -99,6 +99,7 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
         $this->setValidation($pdf, $student->getValidateEvalSuppOne(), 16, 145, 16, 156);
+        $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 179);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 240);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 240);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 230,25);
@@ -114,7 +115,7 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
         $this->setValidation($pdf, $student->getValidateActivityTwo(), 16, 69, 16, 76);
-        $this->setLongText($pdf, utf8_decode($student->getCommActivityTwo()), 19, 100);
+//        $this->setLongText($pdf, utf8_decode($student->getCommActivityTwo()), 19, 100);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 188);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 188);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 180,25);
@@ -126,6 +127,7 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
         $this->setValidation($pdf, $student->getValidateEvalSuppTwo(), 16, 152, 16, 162);
+        $this->setLongText($pdf, utf8_decode($student->getCommActivityTwo()), 19, 182);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 247);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 247);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 237,25);
@@ -211,7 +213,7 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
         $this->setValidation($pdf, $student->getValidateActivityOne(), 15, 71.4, 15, 79);
-        $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 102);
+//        $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 102);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 245);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 245);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 236,25);
@@ -222,6 +224,7 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
         $this->setValidation($pdf, $student->getValidateEvalSuppOne(), 16, 159.4, 16, 167);
+        $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 186);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 251);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 251);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 243,25);
@@ -237,7 +240,7 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
         $this->setValidation($pdf, $student->getValidateActivityTwo(), 15, 66, 15, 73);
-        $this->setLongText($pdf, utf8_decode($student->getCommActivityTwo()), 19, 97);
+//        $this->setLongText($pdf, utf8_decode($student->getCommActivityTwo()), 19, 97);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 250);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 250);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 240,25);
@@ -249,6 +252,7 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
         $this->setValidation($pdf, $student->getValidateEvalSuppTwo(), 16, 157, 16, 165);
+        $this->setLongText($pdf, utf8_decode($student->getCommActivityTwo()), 19, 182);
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 248);
         $this->setSimpleTxt($pdf,(new \DateTime())->format('d-m-Y'), 105, 248);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 238,25);
