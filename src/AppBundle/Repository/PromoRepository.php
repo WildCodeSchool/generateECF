@@ -10,13 +10,20 @@ namespace AppBundle\Repository;
  */
 class PromoRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getPromoByCity($cityId){
+    public function getPromoByCityAndDate($city){
+        $langages = ['php', 'js', 'java'];
+
         $qb = $this->createQueryBuilder('p');
         $qb->select('p')
             ->join('p.city', 'c')
-            ->where('c.id = :cityId')
-            ->setParameter('cityId', $cityId);
+            ->add('where', $qb->expr()->in('p.langage', $langages))
+            ->andWhere('c.id = :cityId')
+            ->orderBy('p.langage', 'ASC')
+            ->addOrderBy('p.name', 'ASC')
+            ->setParameter('cityId', $city)
+        ;
 
         return $qb->getQuery()->getResult();
     }
+
 }

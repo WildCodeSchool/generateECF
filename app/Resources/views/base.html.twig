@@ -47,6 +47,16 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
+
+<script>
+    $("#choose-date").change(function(){
+        let selectValue = $("#choose_promo_choosepromo option:selected").val();
+        document.forms['choose_promo'].submit();
+    });
+
+</script>
+
 {% block javascripts %}{% endblock %}
+
 </body>
 </html>

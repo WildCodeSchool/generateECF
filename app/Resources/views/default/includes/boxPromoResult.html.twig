@@ -1,23 +1,36 @@
 <div class="row">
-    {% for promo in promos %}
-        <div class="col-md-3">
-            <a href="{{ path('student_index', { 'promo': promo.id }) }}">
-                <div class="card">
-                    <div class="card-body text-dark text-center">
-                        <p class="">
-                            <span class="badge badge-warning float-right">{{ promo.langage }}</span>
-                            <i class="fab fa-9x fa-{{ promo.langage|lower }}"></i>
-                        </p>
-                        <p class="card-text">{{ promo.name }}</p>
-                    </div>
-                    <p><a href="{{ path('promo_edit', { 'id': promo.id }) }}">Custom ta promo</a></p>
+    {% if promos is not empty %}
+        <div class="row">
+            {% for promo in promos %}
+                <div class="col-md-3 mb-4">
+                    <a href="{{ path('student_index', { 'promo': promo.id }) }}">
+                        <div class="card">
+                            <div class="card-body text-dark text-center">
+                                <p class="">
+                                    <span class="badge badge-warning float-right">{{ promo.langage }}</span>
+                                    <i class="fab fa-9x fa-{{ promo.langage|lower }}"></i>
+                                </p>
+                                <p class="card-text">{{ promo.name }}</p>
+                            </div>
+                            <a class="nav-link btn mx-5 cityButton active text-white btn-warning"
+                               href="{{ path('promo_edit', { 'id': promo.id }) }}">
+                                Custom ta promo
+                            </a>
+                        </div>
+                    </a>
                 </div>
-            </a>
+            {% endfor %}
         </div>
 
     {% else %}
-        <div class="col">
-            <div class="alert alert-danger">Il n'y a pas encore de promotion pour cette école</div>
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-danger">Il n'y a pas encore de promotion pour cette école</div>
+            </div>
         </div>
-    {% endfor %}
+    {% endif %}
 </div>
+
+{% block javascripts %}
+
+{% endblock %}

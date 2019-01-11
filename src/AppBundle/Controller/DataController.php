@@ -52,7 +52,6 @@ class DataController extends Controller
             ]
         ]);
         $crews = json_decode($res->getBody()->getContents());
-
         return $crews;
     }
     /**
@@ -67,60 +66,62 @@ class DataController extends Controller
         $gender = ['Man' => Student::MALE, 'Woman' => Student::FEMALE];
 
         foreach ($crews as $crew){
-            if (new \DateTime('2018-02-20') < new \DateTime($crew->start_date) && new \DateTime($crew->end_date) < new \DateTime('2018-08-01') && $crew->start_date != null){
+            if (new \DateTime('2018-02-20') < new \DateTime($crew->start_date) && $crew->start_date != null){
                 $promo = $em->getRepository(Promo::class)->findOneBy(array('name' => $crew->name));
-                if ($promo == null){
+
+                if ($promo == null) {
                     $promo = new Promo();
-                    $promo->setName($crew->name);
-                    if (count($crew->trainers) > 0){
-                        $promo->setTrainer($crew->trainers[0]->fullname);
-                    }
-
-                    if (isset($crew->program_type)){
-                        $promo->setLangage($crew->program_type->name);
-                    } else {
-                        $promo->setLangage('undifined');
-                    }
-
-                    if (isset($crew->location->city)){
-                        $city = $em->getRepository(City::class)->findOneBy(array('name' => $crew->location->city));
-                        if ($city == null){
-                            $city = new City();
-                            $city->setName($crew->location->city);
-                            $em->persist($city);
-                            $em->flush();
-                        }
-                        $promo->setCity($city);
-                    }
-
-                    $em->persist($promo);
-
-                    $students = $this->getApiStudentData($crew->id)->students;
-                    foreach ($students as $student){
-                        $studentExist = $em->getRepository(Student::class)->findOneBy(array(
-                            'firstname' => $student->firstname,
-                            'name' => $student->lastname,
-                            'dateOfBirth' => new \DateTime($student->birthdate)
-                        ));
-                        if ($studentExist == null){
-                            $newStudent = new Student();
-                            $newStudent->setName($student->lastname);
-                            $newStudent->setFirstname($student->firstname);
-
-                            if ($student->gender != null) {
-                                $newStudent->setGender($gender[$student->gender]);
-                            } else {
-                                $newStudent->setGender(Student::GENDER_UNDEFINED);
-                            }
-                            $newStudent->setPromo($promo);
-                            $newStudent->setDateOfBirth(new \DateTime($student->birthdate));
-                            $em->persist($newStudent);
-                            $em->flush();
-                        }
-
-                    }
-                    $em->flush();
                 }
+                $promo->setName($crew->name);
+
+                $promo->setStart(new \DateTime($crew->start_date));
+                $promo->setEnd(new \DateTime($crew->end_date));
+
+                if (count($crew->trainers) > 0){
+                    $promo->setTrainer($crew->trainers[0]->fullname);
+                }
+
+                if (isset($crew->course)){
+                    $promo->setLangage($crew->course->name);
+                } else {
+                    $promo->setLangage('undifined');
+                }
+
+                if (isset($crew->location->city)){
+                    $city = $em->getRepository(City::class)->findOneBy(array('name' => $crew->location->city));
+                    if ($city == null){
+                        $city = new City();
+                        $city->setName($crew->location->city);
+                        $em->persist($city);
+                    }
+                    $promo->setCity($city);
+                }
+
+                $em->persist($promo);
+
+                $students = $this->getApiStudentData($crew->id)->students;
+                foreach ($students as $student){
+                    $studentExist = $em->getRepository(Student::class)->findOneBy(array(
+                        'firstname' => $student->firstname,
+                        'name' => $student->lastname,
+                        'dateOfBirth' => new \DateTime($student->birthdate)
+                    ));
+                    if ($studentExist == null) {
+                        $newStudent = new Student();
+                    }
+                    $newStudent->setName($student->lastname);
+                    $newStudent->setFirstname($student->firstname);
+
+                    if ($student->gender != null) {
+                        $newStudent->setGender($gender[$student->gender]);
+                    } else {
+                        $newStudent->setGender(Student::GENDER_UNDEFINED);
+                    }
+                    $newStudent->setPromo($promo);
+                    $newStudent->setDateOfBirth(new \DateTime($student->birthdate));
+                    $em->persist($newStudent);
+                }
+                $em->flush();
             }
 
         }

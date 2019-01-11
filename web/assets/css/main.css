@@ -1,6 +1,12 @@
 body {
     padding-top: 70px;
 }
+
+.row{
+    margin: auto;
+    width: 100%;
+}
+
 .navbar img {
     width:40px;
 }
@@ -13,6 +19,11 @@ body {
 .boxPromo img {
     height: 150px;
     object-fit: contain;
+}
+
+.choosePromoForm{
+    margin-top: -35px;
+    margin-bottom: 20px;
 }
 
 .logo {
@@ -36,4 +47,8 @@ body {
 
 #showMoreActivityOne, #showMoreActivityTwo{
     display: none;
+}
+
+.container-fluid{
+    margin-bottom: 65px;
 }

@@ -49,7 +49,9 @@ class StudentType extends AbstractType
                 'label' => "Avis general sur l'eleve"
             ))
         ;
-    }/**
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -66,6 +68,4 @@ class StudentType extends AbstractType
     {
         return 'appbundle_student';
     }
-
-
 }

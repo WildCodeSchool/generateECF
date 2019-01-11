@@ -174,8 +174,12 @@ class Promo
             $this->langage = 'php';
         } elseif ($langage == 'AngularJS' || $langage == 'JS' || $langage == 'React' || $langage == 'Angular'){
             $this->langage = 'js';
-        } elseif ($langage == 'Java JEE' || $langage == 'Android'){
+        } elseif ($langage == 'Java JEE' || $langage == 'Angular / JEE' || $langage == 'Android'){
             $this->langage = 'java';
+        } elseif ($langage == 'Data Analyst'){
+            $this->langage = 'data';
+        }  elseif ($langage == 'Pré-rentré'){
+            $this->langage = 'Pré-rentré';
         } else{
             $this->langage = 'undifined';
         }

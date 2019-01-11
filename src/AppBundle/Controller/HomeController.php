@@ -5,11 +5,13 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\City;
 use AppBundle\Entity\Promo;
 use AppBundle\Entity\Student;
+use AppBundle\Form\ChoosePromoType;
 use AppBundle\Services\Zip;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use AppBundle\Services\WritePdf;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
@@ -22,12 +24,14 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $promos = $em->getRepository(Promo::class)->findBy(['city' => $city], ['langage' => 'ASC', 'name' => 'ASC']);
+        $promos = $em->getRepository(Promo::class)->getPromoByCityAndDate($city);
+
         return $this->render('default/includes/boxPromoResult.html.twig', [
             'promos' => $promos ?? [],
         ]);
-
     }
+
+
 
      /**
      * @return Response
@@ -40,7 +44,7 @@ class HomeController extends Controller
 
         return $this->render('default/index.html.twig', [
             'cities' => $cities,
-            'city'   => $city,
+            'city'   => $city
         ]);
 
     }
