@@ -46,7 +46,7 @@ class PromoType extends AbstractType
                 'label' => ' Version de l\'ECF',
                 'choices' => array(
                     'Developpeur Web et Mobile (nouvelle version)' => Promo::NEW_ECF,
-                    'Developpeur Logiciel (ancienne version)' => Promo::OLD_ECF
+//                    'Developpeur Logiciel (ancienne version)' => Promo::OLD_ECF
                 )
             ))
         ;

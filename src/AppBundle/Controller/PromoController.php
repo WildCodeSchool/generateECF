@@ -37,7 +37,7 @@ class PromoController extends Controller
     public function editPromo(Promo $promo, Request $request, FileUploader $fileUploader){
 
         $client = new Client();
-        $res = $client->request('GET', 'https://odyssey.wildcodeschool.fr/api/v2/crews', [
+        $res = $client->request('GET', 'https://odyssey.wildcodeschool.com/api/v2/crews', [
             'headers' => [
                 'Authorization' => $this->getParameter('key_api_odyssey')
             ]
