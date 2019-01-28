@@ -139,6 +139,31 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-header h4 text-white bg-dark">Sign student</div>
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <div class="row">
+                        <div class="col">
+                            {{ form_row(edit_form.sign) }}
+                        </div>
+                        {% if student.sign %}
+                            <div class="col">
+                                <p>Actual sign</p>
+                                <img width="100" src="{{ asset('uploads/sign/' ~ student.sign) }}" alt="sign student">
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
     <div class="row justify-content-center">
         <div class="col-6">
             <input class="btn btn-success btn-block btn-lg" type="submit" value="Edit"/>

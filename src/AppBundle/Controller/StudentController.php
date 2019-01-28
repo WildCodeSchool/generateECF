@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Promo;
 use AppBundle\Entity\Student;
+use AppBundle\Services\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -44,12 +45,26 @@ class StudentController extends Controller
      * @Route("/promo/{promo}/{student}/edit", name="student_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Promo $promo, Student $student)
+    public function editAction(Request $request, Promo $promo, Student $student, FileUploader $fileUploader)
     {
+        $signT = $student->getSign();
+
         $editForm = $this->createForm('AppBundle\Form\StudentType', $student);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            if ($student->getSign() != null){
+                $file = $student->getSign();
+                $fileName = $fileUploader->upload($file);
+                $student->setSign($fileName);
+
+                if ($signT != null){
+                    unlink($this->getParameter('sign_directory') . $signT);
+                }
+            } else {
+                $student->setSign($signT);
+            }
 
             $student->setValidateEvalSuppOne($student->getValidateActivityOne());
             $student->setValidateEvalSuppTwo($student->getValidateActivityTwo());

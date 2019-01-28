@@ -278,6 +278,7 @@ class WritePdf
 
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 156, 146.5,25);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignCM(), 156, 176,25);
+        $this->setSign($pdf, $this->signDirectory . $student->getSign(), 40, 230,25);
 
         $filename = $student->getName() . '_' . $student->getFirstname() . '_ecf.pdf';
         if (!file_exists($this->output . str_replace(' ', '_', $student->getPromo()->getName()))) {

@@ -134,6 +134,18 @@ class Student
     private $observationStudent;
 
     /**
+     * @ORM\Column(name="sign", type="string", nullable=true)
+     *
+     * @Assert\File(
+     *     maxSize = "2048k",
+     *     mimeTypes={ "image/png" },
+     *     mimeTypesMessage = "Please upload a valid PNG",
+     *     maxSizeMessage="Please upload less than 2048k"
+     *     )
+     */
+    private $sign;
+
+    /**
      * @param string $name
      */
     public function setName($name) {
@@ -392,5 +404,24 @@ class Student
     public function getPromo()
     {
         return $this->promo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSign()
+    {
+        return $this->sign;
+    }
+
+    /**
+     * @param $sign_cm
+     * @return $this
+     */
+    public function setSign($sign)
+    {
+        $this->sign = $sign;
+
+        return $this;
     }
 }

@@ -88,6 +88,7 @@
                         <th>Edit</th>
                         <th>Download ECF</th>
                         <th>Name</th>
+                        <th>Sign</th>
                         <th>Activity one</th>
                         <th>Activity two</th>
                         <th>Observation student</th>
@@ -119,6 +120,9 @@
                                 </th>
                             {% endif %}
                             <td>{{ student.firstname }} {{ student.name|upper }}</td>
+                            <td>
+                                <i class="float-left mr-1 fas fa-{{ student.sign ? 'check text-success' : 'times text-danger' }}"></i>
+                            </td>
                             <td>
                                 <i class="float-left mr-1 fas fa-{{ student.validateActivityOne ? 'check text-success' : 'times text-danger' }}"></i>
                                 <p class="small text-muted">{{ student.commActivityOne|slice(0, 50) ~ '...' }}</p>
