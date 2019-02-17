@@ -29,7 +29,7 @@ class DataController extends Controller
      */
     private function getApiCrewData(){
         $client = new Client();
-        $res = $client->request('GET', 'https://odyssey.wildcodeschool.fr/api/v2/crews', [
+        $res = $client->request('GET', 'https://odyssey.wildcodeschool.com/api/v2/crews', [
             'headers' => [
                 'Authorization' => $this->getParameter('key_api_odyssey')
             ]
@@ -46,7 +46,7 @@ class DataController extends Controller
      */
     private function getApiStudentData($idCrew){
         $client = new Client();
-        $res = $client->request('GET', 'https://odyssey.wildcodeschool.fr/api/v2/crews/' . $idCrew, [
+        $res = $client->request('GET', 'https://odyssey.wildcodeschool.com/api/v2/crews/' . $idCrew, [
             'headers' => [
                 'Authorization' => $this->getParameter('key_api_odyssey')
             ]
@@ -104,22 +104,23 @@ class DataController extends Controller
                     $studentExist = $em->getRepository(Student::class)->findOneBy(array(
                         'firstname' => $student->firstname,
                         'name' => $student->lastname,
-                        'dateOfBirth' => new \DateTime($student->birthdate)
+                        'promo' => $student->promo
                     ));
                     if ($studentExist == null) {
-                        $newStudent = new Student();
+                        $studentExist = new Student();
                     }
-                    $newStudent->setName($student->lastname);
-                    $newStudent->setFirstname($student->firstname);
+                    $studentExist->setName($student->lastname);
+                    $studentExist->setFirstname($student->firstname);
 
                     if ($student->gender != null) {
-                        $newStudent->setGender($gender[$student->gender]);
+                        $studentExist->setGender($gender[$student->gender]);
                     } else {
-                        $newStudent->setGender(Student::GENDER_UNDEFINED);
+                        $studentExist->setGender(Student::GENDER_UNDEFINED);
                     }
-                    $newStudent->setPromo($promo);
-                    $newStudent->setDateOfBirth(new \DateTime($student->birthdate));
-                    $em->persist($newStudent);
+                    $studentExist->setPromo($promo);
+                    $studentExist->setDateOfBirth(new \DateTime($student->birthdate));
+                    dump($studentExist);die();
+                    $em->persist($studentExist);
                 }
                 $em->flush();
             }

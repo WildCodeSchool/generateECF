@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{#{{ dump(crews) }}#}
+    <table id="table_id" class="display">
+        <thead>
+        <tr>
+            <th>Id channel</th>
+            <th>Name</th>
+            {#<th>User create</th>#}
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for crew in crews %}
+            {{ dump(crew) }}
+            <tr>
+                <td>{{ crew._id }}</td>
+                <td>{{ crew.name }}</td>
+                {#<td>{{ crew.u }}</td>#}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+
+{% endblock %}
