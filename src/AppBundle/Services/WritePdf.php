@@ -172,8 +172,14 @@ class WritePdf
     public function generatePdfNewVersion(Student $student, Promo $promo){
         // initiate FPDI
         $pdf = new Fpdi();
+
         // set the source file
-        $pdf->setSourceFile($this->template_directory . "template_ecf_2.pdf");
+        if ($promo->getEcfVersion() == Promo::OPCALIA_ECF){
+            $pdf->setSourceFile($this->template_directory . "template_opcalia.pdf");
+        } else{
+            $pdf->setSourceFile($this->template_directory . "template_ecf_2.pdf");
+        }
+
 
         // Generate page 1
 

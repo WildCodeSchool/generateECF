@@ -17,6 +17,7 @@ class Promo
 
     const OLD_ECF = 1;
     const NEW_ECF = 2;
+    const OPCALIA_ECF = 3;
 
     public function __toString()
     {
