@@ -63,15 +63,15 @@ class HomeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $students = $em->getRepository(Student::class)->findBy(array('promo' => $promo));
 
-        if ($promo->getEcfVersion() == Promo::OLD_ECF){
-            foreach ($students as $student) {
-                $writePdf->generatePdfOldVersion($student, $promo);
-            }
-        } else{
+//        if ($promo->getEcfVersion() == Promo::OLD_ECF){
+//            foreach ($students as $student) {
+//                $writePdf->generatePdfOldVersion($student, $promo);
+//            }
+//        } else{
             foreach ($students as $student) {
                 $writePdf->generatePdfNewVersion($student, $promo);
             }
-        }
+//        }
 
         $zipInfos = $zip->zipFolder($promo);
 
@@ -91,12 +91,12 @@ class HomeController extends Controller
      */
     public function generateStudentPdf(Promo $promo, Student $student, WritePdf $writePdf)
     {
-        if ($promo->getEcfVersion() == Promo::OLD_ECF){
-            return new BinaryFileResponse($writePdf->generatePdfOldVersion($student, $promo));
-
-        } else{
+//        if ($promo->getEcfVersion() == Promo::OLD_ECF){
+//            return new BinaryFileResponse($writePdf->generatePdfOldVersion($student, $promo));
+//
+//        } else{
             return new BinaryFileResponse($writePdf->generatePdfNewVersion($student, $promo));
-        }
+//        }
     }
 
     /**
@@ -106,10 +106,12 @@ class HomeController extends Controller
      * @Route("/download/template/promo/{promo}", name="downloadTemplate")
      */
     public function downloadTemplateAction(Promo $promo){
-        if ($promo->getEcfVersion() == Promo::OLD_ECF){
-            return new BinaryFileResponse($this->getParameter('template_directory') . 'template.pdf');
+        if ($promo->getEcfVersion() == Promo::ECF_PHP){
+            return new BinaryFileResponse($this->getParameter('template_directory') . 'templateecf_php_fev2019.pdf');
+        } elseif ($promo->getEcfVersion() == Promo::ECF_JS){
+            return new BinaryFileResponse($this->getParameter('template_directory') . 'templateecf_js_fev2019.pdf');
         } else{
-            return new BinaryFileResponse($this->getParameter('template_directory') . 'template_ecf_2.pdf');
+            return new BinaryFileResponse($this->getParameter('template_directory') . 'templateecf_java_fev2019.pdf');
         }
     }
 }

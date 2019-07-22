@@ -15,9 +15,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Promo
 {
 
-    const OLD_ECF = 1;
-    const NEW_ECF = 2;
-    const OPCALIA_ECF = 3;
+    const ECF_PHP = 1;
+    const ECF_JS = 2;
+    const ECF_JAVA = 3;
 
     public function __toString()
     {

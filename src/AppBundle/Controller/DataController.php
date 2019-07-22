@@ -119,7 +119,6 @@ class DataController extends Controller
                     }
                     $studentExist->setPromo($promo);
                     $studentExist->setDateOfBirth(new \DateTime($student->birthdate));
-                    dump($studentExist);die();
                     $em->persist($studentExist);
                 }
                 $em->flush();

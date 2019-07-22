@@ -45,9 +45,9 @@ class PromoType extends AbstractType
             ->add('ecfVersion', ChoiceType::class, array(
                 'label' => ' Version de l\'ECF',
                 'choices' => array(
-                    'Developpeur Web et Mobile (nouvelle version)' => Promo::NEW_ECF,
-                    'Developpeur Web et Mobile (OPCALIA)' => Promo::OPCALIA_ECF,
-//                    'Developpeur Logiciel (ancienne version)' => Promo::OLD_ECF
+                    'Developpeur Web et Mobile PHP' => Promo::ECF_PHP,
+                    'Developpeur Web et Mobile JS' => Promo::ECF_JS,
+                    'Developpeur Web et Mobile JAVA' => Promo::ECF_JAVA
                 )
             ))
         ;

@@ -166,7 +166,12 @@ class WritePdf
 
     /**
      * @param Student $student
+     * @param Promo $promo
      * @return string
+     * @throws \setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException
+     * @throws \setasign\Fpdi\PdfParser\Filter\FilterException
+     * @throws \setasign\Fpdi\PdfParser\PdfParserException
+     * @throws \setasign\Fpdi\PdfParser\Type\PdfTypeException
      * @throws \setasign\Fpdi\PdfReader\PdfReaderException
      */
     public function generatePdfNewVersion(Student $student, Promo $promo){
@@ -174,10 +179,12 @@ class WritePdf
         $pdf = new Fpdi();
 
         // set the source file
-        if ($promo->getEcfVersion() == Promo::OPCALIA_ECF){
-            $pdf->setSourceFile($this->template_directory . "template_opcalia.pdf");
+        if ($promo->getEcfVersion() == Promo::ECF_PHP){
+            $pdf->setSourceFile($this->template_directory . "templateecf_php_fev2019.pdf");
+        } elseif ($promo->getEcfVersion() == Promo::ECF_JS){
+            $pdf->setSourceFile($this->template_directory . "templateecf_js_fev2019.pdf");
         } else{
-            $pdf->setSourceFile($this->template_directory . "template_ecf_2.pdf");
+            $pdf->setSourceFile($this->template_directory . "templateecf_java_fev2019.pdf");
         }
 
 

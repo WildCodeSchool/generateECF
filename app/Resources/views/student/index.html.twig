@@ -50,10 +50,12 @@
         <div class="col">
             Version ECF:
             {% if promo.ecfVersion %}
-                {% if promo.ecfVersion == constant('AppBundle\\Entity\\Promo::NEW_ECF') %}
-                    <span class="alert alert-success">Developpeur Web et Mobile (nouvelle version)</span>
-                {% elseif promo.ecfVersion == constant('AppBundle\\Entity\\Promo::OLD_ECF') %}
-                    <span class="alert alert-success">Developpeur Logiciel (ancienne version)</span>
+                {% if promo.ecfVersion == constant('AppBundle\\Entity\\Promo::ECF_PHP') %}
+                    <span class="alert alert-success">Developpeur Web et Mobile PHP</span>
+                {% elseif promo.ecfVersion == constant('AppBundle\\Entity\\Promo::ECF_JS') %}
+                    <span class="alert alert-success">Developpeur Web et Mobile JS</span>
+                {% elseif promo.ecfVersion == constant('AppBundle\\Entity\\Promo::ECF_JAVA') %}
+                    <span class="alert alert-success">Developpeur Web et Mobile JAVA</span>
                 {% endif %}
             {% else %}
                     <span class="alert alert-danger">Undefined</span>
