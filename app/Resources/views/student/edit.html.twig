@@ -8,7 +8,14 @@
                 <div class="media-body">
                     <h1 class="h3">{{ student.firstname }} {{ student.name|upper }}</h1>
                     <p class="col-4">
-                        DateBirth: {{ student.dateOfBirth|date("d/m/Y") }} <br/>
+                        DateBirth: <span id="student_birth">{{ student.dateOfBirth|date("d/m/Y") }}</span>
+                        <a href="#"><i id="birth_edit_button" class="fa fa-edit fa-lg text-dark"></i></a>
+                        <span id="change_date" class="d-none">
+                            <input id="date_picker" type="date">
+                            <button data-action="{{ path('student_edit_birth', {'student': student.id}) }}" id="validate_date">Valider</button>
+                            <br/>
+                        </span>
+
                         Gender:
                         {% if student.gender == constant('AppBundle\\Entity\\Student::FEMALE') %}
                             Femme
@@ -158,5 +165,31 @@
             let type = $(this).data('type');
             $('#' + type).slideToggle();
         });
+
+        $('#birth_edit_button').click(function (e) {
+            e.preventDefault();
+            $('#change_date').removeClass();
+            $('#validate_date').click(function () {
+                let stringDate = $('#date_picker').val();
+                let action = $('#validate_date').data('action');
+                $.ajax({
+                    url: action,
+                    type: "POST",
+                    data: {'date': stringDate},
+                    success: function(response){
+                        $('#student_birth').html(response);
+                        $('#change_date').addClass('d-none');
+                        alert('update success')
+                    },
+                    error: function(error){
+                        console.log(error);
+                        alert("update error, try again")
+                    }
+                })
+
+
+            });
+
+        })
     </script>
 {% endblock %}

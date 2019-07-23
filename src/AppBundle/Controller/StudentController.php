@@ -7,7 +7,10 @@ use AppBundle\Entity\Student;
 use AppBundle\Services\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Student controller.
@@ -77,5 +80,26 @@ class StudentController extends Controller
             'student' => $student,
             'edit_form' => $editForm->createView(),
         ));
+    }
+
+    /**
+     * @param Request $request
+     * @param Student $student
+     * @return JsonResponse
+     * @throws \Exception
+     * @Route("/editBirth/{student}", name="student_edit_birth")
+     */
+    public function changeDateBirth(Request $request, Student $student){
+        $em = $this->getDoctrine()->getManager();
+        $date = $request->get('date');
+        $dateTime = new \DateTime($date, new \DateTimeZone('Europe/Paris'));
+
+        $student->setDateOfBirth($dateTime);
+        $em->persist($student);
+        $em->flush();
+
+        $studentDateBirth = $student->getDateOfBirth()->format('d/m/Y');
+
+        return new JsonResponse($studentDateBirth, 200);
     }
 }
