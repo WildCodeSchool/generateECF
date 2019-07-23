@@ -47,7 +47,8 @@ class PromoType extends AbstractType
                 'choices' => array(
                     'Developpeur Web et Mobile PHP' => Promo::ECF_PHP,
                     'Developpeur Web et Mobile JS' => Promo::ECF_JS,
-                    'Developpeur Web et Mobile JAVA' => Promo::ECF_JAVA
+                    'Developpeur Web et Mobile JAVA' => Promo::ECF_JAVA,
+                    'Developpeur Web et Mobile JS/JAVA' => Promo::ECF_JS_JAVA
                 )
             ))
         ;

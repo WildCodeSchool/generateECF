@@ -56,6 +56,8 @@
                     <span class="alert alert-success">Developpeur Web et Mobile JS</span>
                 {% elseif promo.ecfVersion == constant('AppBundle\\Entity\\Promo::ECF_JAVA') %}
                     <span class="alert alert-success">Developpeur Web et Mobile JAVA</span>
+                {% elseif promo.ecfVersion == constant('AppBundle\\Entity\\Promo::ECF_JS_JAVA') %}
+                    <span class="alert alert-success">Developpeur Web et Mobile JS et JAVA</span>
                 {% endif %}
             {% else %}
                     <span class="alert alert-danger">Undefined</span>

@@ -33,6 +33,8 @@
                         <span class="alert alert-success">Developpeur Web et Mobile JS</span>
                     {% elseif student.promo.ecfVersion == constant('AppBundle\\Entity\\Promo::ECF_JAVA') %}
                         <span class="alert alert-success">Developpeur Web et Mobile JAVA</span>
+                    {% elseif student.promo.ecfVersion == constant('AppBundle\\Entity\\Promo::ECF_JS_JAVA') %}
+                        <span class="alert alert-success">Developpeur Web et Mobile JS et JAVA</span>
                     {% endif %}
                 </p>
             </div>

@@ -110,8 +110,10 @@ class HomeController extends Controller
             return new BinaryFileResponse($this->getParameter('template_directory') . 'templateecf_php_fev2019.pdf');
         } elseif ($promo->getEcfVersion() == Promo::ECF_JS){
             return new BinaryFileResponse($this->getParameter('template_directory') . 'templateecf_js_fev2019.pdf');
-        } else{
+        } elseif ($promo->getEcfVersion() == Promo::ECF_JAVA) {
             return new BinaryFileResponse($this->getParameter('template_directory') . 'templateecf_java_fev2019.pdf');
+        } else{
+            return new BinaryFileResponse($this->getParameter('template_directory') . 'templateecf_js_java_fev2019.pdf');
         }
     }
 }

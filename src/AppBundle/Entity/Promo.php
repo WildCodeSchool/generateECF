@@ -18,6 +18,7 @@ class Promo
     const ECF_PHP = 1;
     const ECF_JS = 2;
     const ECF_JAVA = 3;
+    const ECF_JS_JAVA = 4;
 
     public function __toString()
     {
