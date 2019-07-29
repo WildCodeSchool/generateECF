@@ -29,6 +29,7 @@ class StudentFixtures extends Fixture implements DependentFixtureInterface
             $student = new Student();
             $student->setName($faker->name);
             $student->setFirstname($faker->firstName);
+            $student->setEmail($faker->email);
             $student->setGender($genders[array_rand($genders)]);
             $student->setDateOfBirth($faker->dateTime);
             $student->setValidateActivityOne($faker->boolean);
@@ -37,8 +38,6 @@ class StudentFixtures extends Fixture implements DependentFixtureInterface
             $student->setValidateEvalSuppTwo($faker->boolean);
             $student->setCommActivityOne($faker->sentence(20, true));
             $student->setCommActivityTwo($faker->sentence(20, true));
-            $student->setCommEvalSuppOne($faker->sentence(20, true));
-            $student->setCommEvalSuppTwo($faker->sentence(20, true));
             $student->setObservationStudent($faker->sentence(20, true));
 
             $student->setPromo($this->getReference('promo_' . $promoReferences[array_rand($promoReferences)]));

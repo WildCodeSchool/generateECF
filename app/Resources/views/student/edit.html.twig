@@ -7,7 +7,7 @@
                 <img class="mr-3" src="http://via.placeholder.com/150x150" alt="Student picture">
                 <div class="media-body">
                     <h1 class="h3">{{ student.firstname }} {{ student.name|upper }}</h1>
-                    <p class="col-4">
+                    <p class="col-6">
                         DateBirth: <span id="student_birth">{{ student.dateOfBirth|date("d/m/Y") }}</span>
                         <a href="#"><i id="birth_edit_button" class="fa fa-edit fa-lg text-dark"></i></a>
                         <span id="change_date" class="d-none">
@@ -25,14 +25,13 @@
                             Undefined
                         {% endif %}
                         <br/>
+                        Email : {{ student.email }}<br/>
                         PromoName: {{ student.promo.name }}
                     </p>
                 </div>
             </div>
         </div>
-        <div class="col float-right">
-            <div class="row">
-                <p>
+        <div class="col ">
                     Version ECF:
                     {% if student.promo.ecfVersion == constant('AppBundle\\Entity\\Promo::ECF_PHP') %}
                         <span class="alert alert-success">Developpeur Web et Mobile PHP</span>
@@ -43,11 +42,9 @@
                     {% elseif student.promo.ecfVersion == constant('AppBundle\\Entity\\Promo::ECF_JS_JAVA') %}
                         <span class="alert alert-success">Developpeur Web et Mobile JS et JAVA</span>
                     {% endif %}
-                </p>
-            </div>
-            <div class="row">
-                <a class="btn btn-success" target="_blank" href="{{ path('downloadTemplate', {'promo': student.promo.id }) }}">Telecharger le template du livret ECF</a>
-            </div>
+                    <a class="btn btn-success" target="_blank" href="{{ path('downloadTemplate', {'promo': student.promo.id }) }}">
+                        Telecharger le template du livret ECF
+                    </a>
         </div>
     </div>
 

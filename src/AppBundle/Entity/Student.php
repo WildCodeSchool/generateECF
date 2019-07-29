@@ -23,7 +23,7 @@ class Student
         $this->setValidateEvalSuppOne(false);
         $this->setValidateActivityTwo(false);
         $this->setValidateActivityOne(false);
-        $this->setObservationStudent("a remplir");
+        $this->setObservationStudent("à remplir");
     }
 
     /**
@@ -48,6 +48,13 @@ class Student
      * @ORM\Column(name="firstname", type="string", length=255)
      */
     private $firstname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
 
     /**
      * @var string
@@ -209,6 +216,26 @@ class Student
     {
         return $this->firstname;
     }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     * @return Student
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
 
     /**
      * @return string
