@@ -32,21 +32,70 @@ class HomeController extends Controller
     }
 
 
-
-     /**
+    /**
      * @return Response
      * @Route("/{city}", name="homepage")
      */
     public function indexAction(City $city = null)
     {
         $em = $this->getDoctrine()->getManager();
-        $cities = $em->getRepository(City::class)->findBy([], ['name'=>'ASC']);
+        $cities = $em->getRepository(City::class)->findBy([], ['name' => 'ASC']);
 
         return $this->render('default/index.html.twig', [
             'cities' => $cities,
-            'city'   => $city
+            'city'   => $city,
         ]);
 
+    }
+
+    /**
+     *
+     * @Route("/send-mail/{promo}", name="send_mail_ecf")
+     */
+    public function sendEcfMailPromo(Promo $promo, WritePdf $writePdf, \Swift_Mailer $mailer)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $students = $em->getRepository(Student::class)->findBy(array('promo' => $promo));
+
+        foreach ($students as $student) {
+            $message = (new \Swift_Message('ECF - ' . $student->getFirstname() . ' ' . $student->getName()))
+                ->setFrom($this->getParameter('mailer_user'))
+                ->setTo($student->getEmail())
+                ->setBody(
+                    $this->renderView('email/sendEcf.html.twig', ['student' => $student]),
+                    'text/html'
+                )
+                ->attach(\Swift_Attachment::fromPath($writePdf->generatePdfNewVersion($student, $promo)));
+
+            $mailer->send($message);
+        }
+
+
+        $this->addFlash('success', 'Le message a bien été envoyé');
+
+        return $this->redirectToRoute('student_index', ['promo' => $promo->getId()]);
+    }
+
+    /**
+     *
+     * @Route("/send-mail-student/{student}", name="send_mail_student_ecf")
+     */
+    public function sendEcfMailStudent(Student $student, WritePdf $writePdf, \Swift_Mailer $mailer)
+    {
+        $message = (new \Swift_Message('ECF - ' . $student->getFirstname() . ' ' . $student->getName()))
+            ->setFrom($this->getParameter('mailer_user'))
+            ->setTo($student->getEmail())
+            ->setBody(
+                $this->renderView('email/sendEcf.html.twig', ['student' => $student]),
+                'text/html'
+            )
+            ->attach(\Swift_Attachment::fromPath($writePdf->generatePdfNewVersion($student, $student->getPromo())));
+
+        $mailer->send($message);
+
+        $this->addFlash('success', 'Le message a bien été envoyé');
+
+        return $this->redirectToRoute('student_index', ['promo' => $student->getPromo()->getId()]);
     }
 
     /**
@@ -63,15 +112,9 @@ class HomeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $students = $em->getRepository(Student::class)->findBy(array('promo' => $promo));
 
-//        if ($promo->getEcfVersion() == Promo::OLD_ECF){
-//            foreach ($students as $student) {
-//                $writePdf->generatePdfOldVersion($student, $promo);
-//            }
-//        } else{
-            foreach ($students as $student) {
-                $writePdf->generatePdfNewVersion($student, $promo);
-            }
-//        }
+        foreach ($students as $student) {
+            $writePdf->generatePdfNewVersion($student, $promo);
+        }
 
         $zipInfos = $zip->zipFolder($promo);
 
@@ -95,7 +138,7 @@ class HomeController extends Controller
 //            return new BinaryFileResponse($writePdf->generatePdfOldVersion($student, $promo));
 //
 //        } else{
-            return new BinaryFileResponse($writePdf->generatePdfNewVersion($student, $promo));
+        return new BinaryFileResponse($writePdf->generatePdfNewVersion($student, $promo));
 //        }
     }
 
@@ -105,14 +148,15 @@ class HomeController extends Controller
      *
      * @Route("/download/template/promo/{promo}", name="downloadTemplate")
      */
-    public function downloadTemplateAction(Promo $promo){
-        if ($promo->getEcfVersion() == Promo::ECF_PHP){
+    public function downloadTemplateAction(Promo $promo)
+    {
+        if ($promo->getEcfVersion() == Promo::ECF_PHP) {
             return new BinaryFileResponse($this->getParameter('template_directory') . 'templateecf_php_fev2019.pdf');
-        } elseif ($promo->getEcfVersion() == Promo::ECF_JS){
+        } elseif ($promo->getEcfVersion() == Promo::ECF_JS) {
             return new BinaryFileResponse($this->getParameter('template_directory') . 'templateecf_js_fev2019.pdf');
         } elseif ($promo->getEcfVersion() == Promo::ECF_JAVA) {
             return new BinaryFileResponse($this->getParameter('template_directory') . 'templateecf_java_fev2019.pdf');
-        } else{
+        } else {
             return new BinaryFileResponse($this->getParameter('template_directory') . 'templateecf_js_java_fev2019.pdf');
         }
     }

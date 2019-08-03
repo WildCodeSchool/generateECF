@@ -68,15 +68,17 @@
         <div class="col-4">
             {% if (promo.adress) == null or (promo.campusManager == null) or (promo.ecfVersion == null) %}
                 <div class="alert alert-danger" role="alert">
-                    <p><strong>Des informations sur la promotions manquent pour te permettre de telecharger les ECF</strong></p>
+                    <p><strong>Des informations sur la promotions manquent pour te permettre de générer les ECF</strong></p>
                     <p><a class="btn btn-primary btn-lg btn-block" href="{{ path('promo_edit', { 'id': promo.id }) }}">Custom ta promo</a></p>
                 </div>
-                <button class="btn btn-dark btn-lg btn-block" onclick='alert("Il faut que tu renseignes les infos sur ta promo")'
-                   role="button"><i class="fa fa-download text-warning"></i> Telecharger le zip d'ecf</button>
             {% else %}
                 <p><a class="btn btn-primary btn-lg btn-block" href="{{ path('promo_edit', { 'id': promo.id }) }}">Custom ta promo</a></p>
                 <a class="btn btn-dark btn-lg btn-block" href="{{ path('generate_ecf', { 'promo': promo.id }) }}"
                 role="button"><i class="fa fa-download text-warning"></i> Telecharger le zip d'ecf</a>
+
+                <a  onclick='confirm("Cette action va envoyer à chaque élève de la promo, son ECF sous format PDF !")' class="btn btn-dark btn-lg btn-block" href="{{ path('send_mail_ecf', { 'promo': promo.id }) }}"
+                role="button"><i class="fa fa-envelope text-warning"></i> Envoyer les ECF par mail</a>
+
             {% endif %}
         </div>
     </div>
@@ -90,7 +92,8 @@
                     <thead class="bg-dark text-white">
                     <tr>
                         <th>Edit</th>
-                        <th>Download ECF</th>
+                        <th>Download</th>
+                        <th>Send</th>
                         <th>Name</th>
                         <th>Sign</th>
                         <th>Activity two</th>
@@ -110,6 +113,7 @@
                                     <button class="btn btn-default" role="button" onclick='alert("Il faut que tu renseignes les infos sur ta promo")'><i class="fas fa-download fa-lg text-dark"></i>
                                     </button>
                                 </th>
+
                             {% else %}
                                 <th>
                                     <a class="btn btn-default"
@@ -121,6 +125,10 @@
                                        href="{{ path('generate_student_ecf', {'promo': promo.id, 'student': student.id }) }}"
                                        target="_blank"
                                        role="button"><i class="fas fa-download fa-lg text-dark"></i></a>
+                                </th>
+                                <th>
+                                    <a onclick='confirm("Cette action va envoyer à cet élève son ECF sous format PDF !")' class="btn btn-default" href="{{ path('send_mail_student_ecf', { 'student': student.id }) }}"
+                                        role="button"><i class="fas fa-envelope fa-lg text-dark"></i></a>
                                 </th>
                             {% endif %}
                             <td>{{ student.firstname }} {{ student.name|upper }}</td>

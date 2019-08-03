@@ -24,49 +24,20 @@ use Symfony\Component\HttpFoundation\Response;
 class DataController extends Controller
 {
     /**
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    private function getApiCrewData(){
-        $client = new Client();
-        $res = $client->request('GET', 'https://odyssey.wildcodeschool.com/api/v2/crews', [
-            'headers' => [
-                'Authorization' => $this->getParameter('key_api_odyssey')
-            ]
-        ]);
-        $crews = json_decode($res->getBody()->getContents());
-
-        return $crews;
-    }
-
-    /**
-     * @param $idCrew
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    private function getApiStudentData($idCrew){
-        $client = new Client();
-        $res = $client->request('GET', 'https://odyssey.wildcodeschool.com/api/v2/crews/' . $idCrew, [
-            'headers' => [
-                'Authorization' => $this->getParameter('key_api_odyssey')
-            ]
-        ]);
-        $crews = json_decode($res->getBody()->getContents());
-        return $crews;
-    }
-    /**
      * @return Response
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @Route("/data", name="data")
      */
-    public function createCityAndPromoAction(){
+    public function createCityAndPromoAction()
+    {
         $crews = $this->getApiCrewData();
+
         $em = $this->getDoctrine()->getManager();
 
         $gender = ['Man' => Student::MALE, 'Woman' => Student::FEMALE];
 
-        foreach ($crews as $crew){
-            if (new \DateTime('2018-02-20') < new \DateTime($crew->start_date) && $crew->start_date != null){
+        foreach ($crews as $crew) {
+            if (new \DateTime('2018-02-20') < new \DateTime($crew->start_date) && $crew->start_date != null) {
                 $promo = $em->getRepository(Promo::class)->findOneBy(array('name' => $crew->name));
 
                 if ($promo == null) {
@@ -77,19 +48,19 @@ class DataController extends Controller
                 $promo->setStart(new \DateTime($crew->start_date));
                 $promo->setEnd(new \DateTime($crew->end_date));
 
-                if (count($crew->trainers) > 0){
+                if (count($crew->trainers) > 0) {
                     $promo->setTrainer($crew->trainers[0]->fullname);
                 }
 
-                if (isset($crew->course)){
+                if (isset($crew->course)) {
                     $promo->setLangage($crew->course->name);
                 } else {
                     $promo->setLangage('undifined');
                 }
 
-                if (isset($crew->location->city)){
+                if (isset($crew->location->city)) {
                     $city = $em->getRepository(City::class)->findOneBy(array('name' => $crew->location->city));
-                    if ($city == null){
+                    if ($city == null) {
                         $city = new City();
                         $city->setName($crew->location->city);
                         $em->persist($city);
@@ -100,17 +71,21 @@ class DataController extends Controller
                 $em->persist($promo);
 
                 $students = $this->getApiStudentData($crew->id)->students;
-                foreach ($students as $student){
-                    $studentExist = $em->getRepository(Student::class)->findOneBy(array(
-                        'firstname' => $student->firstname,
-                        'name' => $student->lastname,
-                        'promo' => $student->promo
-                    ));
+
+                foreach ($students as $student) {
+                    dump($student);
+                    $studentExist = $em->getRepository(Student::class)->findOneBy([
+                            'firstname' => $student->firstname,
+                            'name'      => $student->lastname,
+                            'promo'     => $promo,
+                        ]
+                    );
                     if ($studentExist == null) {
                         $studentExist = new Student();
                     }
                     $studentExist->setName($student->lastname);
                     $studentExist->setFirstname($student->firstname);
+                    $studentExist->setEmail($student->email);
 
                     if ($student->gender != null) {
                         $studentExist->setGender($gender[$student->gender]);
@@ -126,6 +101,41 @@ class DataController extends Controller
 
         }
         $this->addFlash('notice', 'Update BDD ok');
+
         return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    private function getApiCrewData()
+    {
+        $client = new Client();
+        $res = $client->request('GET', 'https://odyssey.wildcodeschool.com/api/v2/crews', [
+            'headers' => [
+                'Authorization' => $this->getParameter('key_api_odyssey'),
+            ],
+        ]);
+        $crews = json_decode($res->getBody()->getContents());
+
+        return $crews;
+    }
+
+    /**
+     * @param $idCrew
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    private function getApiStudentData($idCrew)
+    {
+        $client = new Client();
+        $res = $client->request('GET', 'https://odyssey.wildcodeschool.com/api/v2/crews/' . $idCrew, [
+            'headers' => [
+                'Authorization' => $this->getParameter('key_api_odyssey'),
+            ],
+        ]);
+        $crews = json_decode($res->getBody()->getContents());
+        return $crews;
     }
 }
