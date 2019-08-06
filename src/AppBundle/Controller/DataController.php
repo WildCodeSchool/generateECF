@@ -73,7 +73,6 @@ class DataController extends Controller
                 $students = $this->getApiStudentData($crew->id)->students;
 
                 foreach ($students as $student) {
-                    dump($student);
                     $studentExist = $em->getRepository(Student::class)->findOneBy([
                             'firstname' => $student->firstname,
                             'name'      => $student->lastname,

@@ -68,6 +68,7 @@ class HomeController extends Controller
                 ->attach(\Swift_Attachment::fromPath($writePdf->generatePdfNewVersion($student, $promo)));
 
             $mailer->send($message);
+            sleep(2);
         }
 
 
