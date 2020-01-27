@@ -19,7 +19,7 @@ class PromoRepository extends \Doctrine\ORM\EntityRepository
             ->add('where', $qb->expr()->in('p.langage', $langages))
             ->andWhere('c.id = :cityId')
             ->orderBy('p.langage', 'ASC')
-            ->addOrderBy('p.name', 'ASC')
+            ->addOrderBy('p.end', 'DESC')
             ->setParameter('cityId', $city)
         ;
 

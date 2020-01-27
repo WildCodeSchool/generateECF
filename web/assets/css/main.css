@@ -16,6 +16,14 @@ body {
     margin-top: 50px;
 }
 
+.boxPromo .card{
+    height: 100%;
+    padding: 8px;
+}
+.boxPromo .card-text{
+min-height: 55px;
+}
+
 .boxPromo img {
     height: 150px;
     object-fit: contain;
@@ -33,10 +41,11 @@ body {
 
 .nav-city a.cityButton {
     color:black;
+    margin: 5px auto;
 }
 
 .nav-city a.cityButton:hover {
-    color:darkslategrey;
+    color:lightcoral;
     border:1px solid darkslategrey;
 }
 
