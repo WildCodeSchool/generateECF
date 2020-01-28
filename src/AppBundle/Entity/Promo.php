@@ -172,18 +172,18 @@ class Promo
      */
     public function setLangage($langage)
     {
-        if ($langage == 'Symfony' || $langage == 'PHP'){
+        if (preg_match('/Symfony|php/i', $langage)) {
             $this->langage = 'php';
-        } elseif ($langage == 'AngularJS' || $langage == 'JS' || $langage == 'React' || $langage == 'Angular'){
-            $this->langage = 'js';
-        } elseif ($langage == 'Java JEE' || $langage == 'Angular / JEE' || $langage == 'Android'){
+        } elseif (preg_match('/Java|JEE|Android/i', $langage)) {
             $this->langage = 'java';
-        } elseif ($langage == 'Data Analyst'){
+        } elseif (preg_match('/AngularJS|JS|React/i', $langage)) {
+            $this->langage = 'js';
+        } elseif ($langage == 'Data Analyst') {
             $this->langage = 'data';
-        }  elseif ($langage == 'Pré-rentré'){
+        } elseif ($langage == 'Pré-rentré') {
             $this->langage = 'Pré-rentré';
-        } else{
-            $this->langage = 'undifined';
+        } else {
+            $this->langage = 'undefined';
         }
         return $this;
     }
@@ -221,6 +221,7 @@ class Promo
     {
         return $this->city;
     }
+
     /**
      * Constructor
      */

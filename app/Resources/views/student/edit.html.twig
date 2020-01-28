@@ -69,8 +69,8 @@
                 <div class="card-body">
                     <h5 class="card-title"></h5>
                     <p class="card-text">
-                        {{ form_row(edit_form.commActivityOne) }}
                         {{ form_row(edit_form.validateActivityOne) }}
+                        {{ form_row(edit_form.commActivityOne, {'attr': {'placeholder': 'Fill this field only if the activity is not valid'}}) }}
                     </p>
                     <hr/>
                 </div>
@@ -95,8 +95,8 @@
                 <div class="card-body">
                     <h5 class="card-title"></h5>
                     <p class="card-text">
-                        {{ form_row(edit_form.commActivityTwo) }}
                         {{ form_row(edit_form.validateActivityTwo) }}
+                        {{ form_row(edit_form.commActivityTwo, {'attr': {'placeholder': 'Fill this field only if the activity is not valid'}}) }}
                     </p>
                     <hr/>
                 </div>
@@ -107,11 +107,11 @@
     <div class="row">
         <div class="col">
             <div class="card mb-3">
-                <div class="card-header h4 text-white bg-dark">Observation generale</div>
+                <div class="card-header h4 text-white bg-dark">Observation générale</div>
                 <div class="card-body">
                     <h5 class="card-title"></h5>
                     <p class="card-text">
-                        {{ form_row(edit_form.observationStudent) }}
+                        {{ form_row(edit_form.observationStudent, {'attr': {'placeholder': 'Fill this field only if one activity is not valid'}}) }}
                     </p>
                 </div>
             </div>

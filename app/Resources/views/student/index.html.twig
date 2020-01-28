@@ -69,10 +69,12 @@
             {% if (promo.adress) == null or (promo.campusManager == null) or (promo.ecfVersion == null) %}
                 <div class="alert alert-danger" role="alert">
                     <p><strong>Des informations sur la promotions manquent pour te permettre de générer les ECF</strong></p>
-                    <p><a class="btn btn-primary btn-lg btn-block" href="{{ path('promo_edit', { 'id': promo.id }) }}">Custom ta promo</a></p>
+                    <p><a class="btn btn-primary btn-lg btn-block" href="{{ path('promo_edit', { 'id': promo.id }) }}">Edit the teaching team</a></p>
                 </div>
             {% else %}
-                <p><a class="btn btn-primary btn-lg btn-block" href="{{ path('promo_edit', { 'id': promo.id }) }}">Custom ta promo</a></p>
+                <p>
+                    <a class="btn btn-primary btn-lg btn-block" href="{{ path('promo_edit', { 'id': promo.id }) }}">Edit your teaching team</a>
+                </p>
                 <a class="btn btn-dark btn-lg btn-block" href="{{ path('generate_ecf', { 'promo': promo.id }) }}"
                 role="button"><i class="fa fa-download text-warning"></i> Telecharger le zip d'ecf</a>
 
@@ -93,7 +95,9 @@
                     <tr>
                         <th>Edit</th>
                         <th>Download</th>
+                        {% if (promo.adress) != null and (promo.campusManager != null)  and (promo.ecfVersion != null) %}
                         <th>Send</th>
+                        {% endif %}
                         <th>Name</th>
                         <th>Sign</th>
                         <th>Activity two</th>

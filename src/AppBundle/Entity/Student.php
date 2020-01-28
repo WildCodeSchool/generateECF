@@ -23,7 +23,7 @@ class Student
         $this->setValidateEvalSuppOne(false);
         $this->setValidateActivityTwo(false);
         $this->setValidateActivityOne(false);
-        $this->setObservationStudent("à remplir");
+        $this->setObservationStudent(null);
     }
 
     /**

@@ -11,24 +11,23 @@
                     <div class="col-12">
                         <h3>{{ promo.langage|title }}</h3>
                     </div>
-                    {% set current_language = promo.langage|lower %}
+                {% set current_language = promo.langage|lower %}
             {% endif %}
             <div class="col-md-3 mb-4 {{ promo.langage|lower }}">
-                <a href="{{ path('student_index', { 'promo': promo.id }) }}">
-                    <div class="card">
-                        <div class="card-body text-dark text-center">
-                            <p class="">
-                                <span class="badge badge-warning float-right">{{ promo.langage }}</span>
-                                <i class="fab fa-9x fa-{{ promo.langage|lower }}"></i>
-                            </p>
-                            <p class="card-text">{{ promo.name }}</p>
-                        </div>
-                        <a class="nav-link btn mx-5 cityButton active text-white btn-warning"
-                           href="{{ path('promo_edit', { 'id': promo.id }) }}">
-                            Custom ta promo
-                        </a>
+                <div class="card">
+                    <div class="card-body text-dark text-center">
+                        <p class="">
+                            <span class="badge badge-warning float-right">{{ promo.langage }}</span>
+                            <i class="fab fa-9x fa-{{ promo.langage|lower }}"></i>
+                        </p>
+                        <p class="card-text">{{ promo.name }}</p>
                     </div>
-                </a>
+                    <a  class="nav-link btn mx-5 cityButton active text-white btn-warning"
+                        href="{{ path('student_index', { 'promo': promo.id }) }}">
+                        Editer les livrets
+                    </a>
+                </div>
+
             </div>
         {% endfor %}
     {% else %}
@@ -39,7 +38,3 @@
         </div>
     {% endif %}
 </div>
-
-{% block javascripts %}
-
-{% endblock %}
