@@ -19,7 +19,7 @@ if (!in_array(getenv('SYMFONY_ENV'),['dev', 'test'])
 require __DIR__.'/../vendor/autoload.php';
 Debug::enable();
 
-$kernel = new AppKernel('dev', true);
+$kernel = new AppKernel(getenv('SYMFONY_ENV'), true);
 if (PHP_VERSION_ID < 70000) {
     $kernel->loadClassCache();
 }
