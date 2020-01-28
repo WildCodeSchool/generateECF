@@ -47,7 +47,8 @@ class StudentType extends AbstractType
                 'attr' => array(
                     'maxlength' => 815,
                 ),
-                'label' => "Avis general sur l'eleve"
+                'label' => "Avis general sur l'élève",
+                'required' => false
             ))
             ->add('sign', FileType::class, array(
                 'label' => 'Sign (PNG file)',

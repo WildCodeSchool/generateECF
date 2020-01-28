@@ -36,13 +36,34 @@ class DataController extends Controller
 
         $gender = ['Man' => Student::MALE, 'Woman' => Student::FEMALE];
 
+
+        $cohortsFromDB = $em->getRepository(Promo::class)->findAll();
+        $cohorts = [];
+        /**
+         * @var $cohortFromDB Promo
+         */
+        foreach ($cohortsFromDB as &$cohortFromDB) {
+            $cohorts[$cohortFromDB->getName()] = $cohortFromDB;
+        }
+
+        $students = [];
+        $studentsFromDB = $em->getRepository(Student::class)->findAll();
+        /**
+         * @var $studentFromDB Student
+         */
+        foreach ($studentsFromDB as &$studentFromDB) {
+            $students[$studentFromDB->getEmail()] = $studentFromDB;
+        }
+
         foreach ($crews as $crew) {
             if (new \DateTime('2018-02-20') < new \DateTime($crew->start_date) && $crew->start_date != null) {
-                $promo = $em->getRepository(Promo::class)->findOneBy(array('name' => $crew->name));
 
-                if ($promo == null) {
+                if (key_exists($crew->name, $cohorts)) {
+                    $promo = $cohorts[$crew->name];
+                }else{
                     $promo = new Promo();
                 }
+
                 $promo->setName($crew->name);
 
                 $promo->setStart(new \DateTime($crew->start_date));
@@ -69,33 +90,32 @@ class DataController extends Controller
                 }
 
                 $em->persist($promo);
+                $em->flush();
 
-                $students = $this->getApiStudentData($crew->id)->students;
+                $studentsFromAPI = $this->getApiStudentData($crew->id)->students;
 
-                foreach ($students as $student) {
-                    $studentExist = $em->getRepository(Student::class)->findOneBy([
-                            'firstname' => $student->firstname,
-                            'name' => $student->lastname,
-                            'promo' => $promo,
-                        ]
-                    );
-                    if ($studentExist == null) {
-                        $studentExist = new Student();
+                foreach ($studentsFromAPI as $studentFromAPI) {
+
+                    if (!key_exists($studentFromAPI->email, $students)) {
+                        $student = new Student();
+                    }else{
+                        $student = $students[$studentFromAPI->email];
                     }
-                    $studentExist->setName($student->lastname);
-                    $studentExist->setFirstname($student->firstname);
-                    $studentExist->setEmail($student->email);
 
-                    if ($student->gender != null) {
-                        $studentExist->setGender($gender[$student->gender]);
+                    $student->setName($studentFromAPI->lastname);
+                    $student->setFirstname($studentFromAPI->firstname);
+                    $student->setEmail($studentFromAPI->email);
+
+                    if ($studentFromAPI->gender != null) {
+                        $student->setGender($gender[$studentFromAPI->gender]);
                     } else {
-                        $studentExist->setGender(Student::GENDER_UNDEFINED);
+                        $student->setGender(Student::GENDER_UNDEFINED);
                     }
-                    $studentExist->setPromo($promo);
-                    $studentExist->setDateOfBirth(new \DateTime($student->birthdate));
-                    $em->persist($studentExist);
-                    $em->flush();
+                    $student->setPromo($promo);
+                    $student->setDateOfBirth(new \DateTime($studentFromAPI->birthdate));
+                    $em->persist($student);
                 }
+                $em->flush();
             }
 
         }

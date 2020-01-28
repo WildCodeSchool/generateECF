@@ -17,3 +17,8 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+
+doctrine:
+    dbal:
+        url: "%env(DATABASE_URL)%"
