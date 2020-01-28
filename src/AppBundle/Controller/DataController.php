@@ -75,8 +75,8 @@ class DataController extends Controller
                 foreach ($students as $student) {
                     $studentExist = $em->getRepository(Student::class)->findOneBy([
                             'firstname' => $student->firstname,
-                            'name'      => $student->lastname,
-                            'promo'     => $promo,
+                            'name' => $student->lastname,
+                            'promo' => $promo,
                         ]
                     );
                     if ($studentExist == null) {
@@ -94,8 +94,8 @@ class DataController extends Controller
                     $studentExist->setPromo($promo);
                     $studentExist->setDateOfBirth(new \DateTime($student->birthdate));
                     $em->persist($studentExist);
+                    $em->flush();
                 }
-                $em->flush();
             }
 
         }
