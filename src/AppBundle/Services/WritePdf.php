@@ -31,6 +31,7 @@ class WritePdf
      * WritePdf constructor.
      * @param $template_directory
      * @param $output
+     * @param $signDirectory
      */
     public function __construct($template_directory, $output, $signDirectory)
     {
@@ -364,7 +365,7 @@ class WritePdf
      * @param $y
      */
     private function setSign(Fpdi $pdf, $img, $x, $y, $w){
-        if ($img != $this->signDirectory){
+        if ($img != $this->signDirectory && file_exists($img)){
             $pdf->Image($img,$x,$y,$w);
         }
     }
