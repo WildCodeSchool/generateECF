@@ -202,48 +202,48 @@ class WritePdf
 
 
         // Generate page 1
-        /*
-                // import page 1
-                $tplIdx = $pdf->importPage(1);
-                $pdf->AddPage('P');
-                // use the imported page
-                $pdf->useTemplate($tplIdx);
-                $this->setSimpleTxt($pdf, utf8_decode($promo->getAdress()), 75.5, 175);
-                $this->setSimpleTxt($pdf, utf8_decode($student->getName()), 75.5, 195);
-                $this->setSimpleTxt($pdf, utf8_decode($student->getFirstname()), 75.5, 200);
-                $this->setSimpleTxt($pdf, $student->getDateOfBirth()->format('d-m-Y'), 75.5, 206);
 
-                if (!empty($student->getGender())) {
-                    $this->setGender($pdf, utf8_decode($student->getGender()), 108, 188.8, 85, 188.8);
-                }
-                /*
-                        // Page 2
-                        $tplIdx = $pdf->importPage(2);
-                        $pdf->AddPage('P');
-                        $pdf->useTemplate($tplIdx);
+        // import page 1
+        $tplIdx = $pdf->importPage(1);
+        $pdf->AddPage('P');
+        // use the imported page
+        $pdf->useTemplate($tplIdx);
+        $this->setSimpleTxt($pdf, utf8_decode($promo->getAdress()), 75.5, 175);
+        $this->setSimpleTxt($pdf, utf8_decode($student->getName()), 75.5, 195);
+        $this->setSimpleTxt($pdf, utf8_decode($student->getFirstname()), 75.5, 200);
+        $this->setSimpleTxt($pdf, $student->getDateOfBirth()->format('d-m-Y'), 75.5, 206);
 
-                        // Page 3
-                        $tplIdx = $pdf->importPage(3);
-                        $pdf->AddPage('P');
-                        $pdf->useTemplate($tplIdx);
+        if (!empty($student->getGender())) {
+            $this->setGender($pdf, utf8_decode($student->getGender()), 108, 188.8, 85, 188.8);
+        }
 
-                        // import page 4
-                        $tplIdx = $pdf->importPage(4);
-                        $pdf->AddPage('P');
-                        // use the imported page
-                        $pdf->useTemplate($tplIdx);
+        // Page 2
+        $tplIdx = $pdf->importPage(2);
+        $pdf->AddPage('P');
+        $pdf->useTemplate($tplIdx);
 
-        //         import page 5
-                $tplIdx = $pdf->importPage(5);
-                $pdf->AddPage('P');
-                // use the imported page
-                $pdf->useTemplate($tplIdx);
-                $this->setValidation($pdf, $student->getValidateActivityOne(), 16, 185, 16, 191);
-                if (!$student->getValidateActivityOne()) {
-                    $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 219);
-                }
+        // Page 3
+        $tplIdx = $pdf->importPage(3);
+        $pdf->AddPage('P');
+        $pdf->useTemplate($tplIdx);
 
-//         import page 6
+        // import page 4
+        $tplIdx = $pdf->importPage(4);
+        $pdf->AddPage('P');
+        // use the imported page
+        $pdf->useTemplate($tplIdx);
+
+//         import page 5
+        $tplIdx = $pdf->importPage(5);
+        $pdf->AddPage('P');
+        // use the imported page
+        $pdf->useTemplate($tplIdx);
+        $this->setValidation($pdf, $student->getValidateActivityOne(), 16, 185, 16, 191);
+        if (!$student->getValidateActivityOne()) {
+            $this->setLongText($pdf, utf8_decode($student->getCommActivityOne()), 19, 219);
+        }
+
+        //      import page 6
         $tplIdx = $pdf->importPage(6);
         $pdf->AddPage('P');
         // use the imported page
@@ -252,7 +252,6 @@ class WritePdf
         $this->setSimpleTxt($pdf, utf8_decode($promo->getTrainer()), 37, 171);
         $this->setSimpleTxt($pdf, (new \DateTime())->format('d-m-Y'), 105, 171);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 163, 25);
-
 
         //        Import page 7
         $tplIdx = $pdf->importPage(7);
@@ -265,15 +264,12 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
 
-
         // import page 9
         $tplIdx = $pdf->importPage(9);
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
 
-
-*/
         // import page 10
         $tplIdx = $pdf->importPage(10);
         $pdf->AddPage('P');
@@ -366,7 +362,8 @@ class WritePdf
      * @param Fpdi $pdf
      * @param $value
      */
-    private function setSimpleTxt(Fpdi $pdf, $value, $x, $y)
+    private
+    function setSimpleTxt(Fpdi $pdf, $value, $x, $y)
     {
         $pdf->SetFont('Helvetica', '', self::FONT_SIZE);
         $pdf->SetXY($x + self::X_OFFSET, $y + self::Y_OFFSET);
@@ -377,7 +374,8 @@ class WritePdf
      * @param Fpdi $pdf
      * @param $value
      */
-    private function setValidation(Fpdi $pdf, $value, $xTrue, $yTrue, $xFalse, $yFalse)
+    private
+    function setValidation(Fpdi $pdf, $value, $xTrue, $yTrue, $xFalse, $yFalse)
     {
         if ($value == true) {
             $pdf->SetXY($xTrue, $yTrue);
@@ -392,7 +390,8 @@ class WritePdf
      * @param Fpdi $pdf
      * @param $value
      */
-    private function setGender(Fpdi $pdf, $value, $xHomme, $Yhomme, $cFemme, $yFemme)
+    private
+    function setGender(Fpdi $pdf, $value, $xHomme, $Yhomme, $cFemme, $yFemme)
     {
         if ($value === 'Woman') {
             $pdf->SetXY($cFemme + self::X_OFFSET, $yFemme + self::Y_OFFSET);
@@ -407,7 +406,8 @@ class WritePdf
      * @param Fpdi $pdf
      * @param $comm
      */
-    private function setLongText(Fpdi $pdf, $comm, $x, $y)
+    private
+    function setLongText(Fpdi $pdf, $comm, $x, $y)
     {
         $pdf->SetFont('Helvetica', '', 10);
         $pdf->SetXY($x, $y);
@@ -424,7 +424,8 @@ class WritePdf
      * @param $x
      * @param $y
      */
-    private function setSign(Fpdi $pdf, $img, $x, $y, $w)
+    private
+    function setSign(Fpdi $pdf, $img, $x, $y, $w)
     {
         if ($img != $this->signDirectory && file_exists($img)) {
             $pdf->Image($img, $x, $y, $w);
