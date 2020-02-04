@@ -253,7 +253,6 @@ class WritePdf
         $this->setSimpleTxt($pdf, (new \DateTime())->format('d-m-Y'), 105, 171);
         $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 154, 163, 25);
 
-
         //        Import page 7
         $tplIdx = $pdf->importPage(7);
         $pdf->AddPage('P');
@@ -265,13 +264,11 @@ class WritePdf
         // use the imported page
         $pdf->useTemplate($tplIdx);
 
-
         // import page 9
         $tplIdx = $pdf->importPage(9);
         $pdf->AddPage('P');
         // use the imported page
         $pdf->useTemplate($tplIdx);
-
 
         // import page 10
         $tplIdx = $pdf->importPage(10);
