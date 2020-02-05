@@ -18,5 +18,5 @@
 .idea/*
 /web/ecfOutput
 /web/zipOutput
-/web/uploads/sign
+!/web/uploads/sign
 **/Entity/*~
