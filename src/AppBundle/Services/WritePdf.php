@@ -396,7 +396,7 @@ class WritePdf
     private
     function setGender(Fpdi $pdf, $value, $xHomme, $Yhomme, $cFemme, $yFemme)
     {
-        if (in_array(strtolower($value), ['woman', 'femme'])) {
+        if (in_array(strtolower($value), ['woman', 'femme', '2'])) {
             $pdf->SetXY($cFemme + self::X_OFFSET, $yFemme + self::Y_OFFSET);
         } else {
             $pdf->SetXY($xHomme + self::X_OFFSET, $Yhomme + self::Y_OFFSET);
