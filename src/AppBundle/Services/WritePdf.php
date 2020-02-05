@@ -343,10 +343,10 @@ class WritePdf
 
         $this->setSimpleTxt($pdf, utf8_decode($promo->getCampusManager()), 37, 200);
         $this->setSimpleTxt($pdf, (new \DateTime())->format('d-m-Y'), 105, 200);
-        $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 156, 195, 25);
+        $this->setSign($pdf, $this->signDirectory . $promo->getSignCM(), 156, 195, 25);
 
 
-        $this->setSign($pdf, $this->signDirectory . $promo->getSignTrainer(), 40, 240, 25);
+        $this->setSign($pdf, $this->signDirectory . $student->getSign(), 40, 240, 25);
 
         $filename = $student->getName() . '_' . $student->getFirstname() . '_ecf.pdf';
         if (!file_exists($this->output . str_replace(' ', '_', $student->getPromo()->getName()))) {
