@@ -217,6 +217,9 @@ class WritePdf
             $this->setGender($pdf, utf8_decode($student->getGender()), 108, 188.8, 85, 188.8);
         }
 
+        $this->setSimpleTxt($pdf, utf8_decode($student->getGender()), 105, 188.8);
+
+
         // Page 2
         $tplIdx = $pdf->importPage(2);
         $pdf->AddPage('P');
