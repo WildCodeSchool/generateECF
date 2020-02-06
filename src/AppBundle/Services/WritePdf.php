@@ -195,7 +195,7 @@ class WritePdf
         } elseif ($promo->getEcfVersion() == Promo::ECF_JS) {
             $pdf->setSourceFile($this->template_directory . "DWWM_ECF_TP-01280m03_LE-Sept19JS.pdf");
         } elseif ($promo->getEcfVersion() == Promo::ECF_JAVA) {
-            $pdf->setSourceFile($this->template_directory . "templateecf_java_fev2019.pdf");
+            $pdf->setSourceFile($this->template_directory . "DWWM_ECF_TP-01280m03_LE-Sept19JAVA.pdf");
         } else {
             $pdf->setSourceFile($this->template_directory . "templateecf_js_java_fev2019.pdf");
         }
