@@ -19,4 +19,6 @@
 /web/ecfOutput
 /web/zipOutput
 !/web/uploads/sign
+/web/uploads/sign/import.csv
+/web/uploads/sign/import.php
 **/Entity/*~
