@@ -21,7 +21,8 @@ class Zip
         $this->zipDirectory = $zipDirectory;
     }
 
-    public function zipFolder(Promo $promo){
+    public function zipFolder(Promo $promo)
+    {
         $zip = new \ZipArchive();
         $outputFileName = str_replace(' ', '_', $promo->getName()) . '_ECF.zip';
 
@@ -42,11 +43,9 @@ class Zip
             \RecursiveIteratorIterator::LEAVES_ONLY
         );
 
-        foreach ($files as $name => $file)
-        {
+        foreach ($files as $name => $file) {
             // Skip directories (they would be added automatically)
-            if (!$file->isDir())
-            {
+            if (!$file->isDir()) {
                 // Get real and relative path for current file
                 $filePath = $file->getRealPath();
                 $relativePath = substr($filePath, strlen($this->ecfDirectory) + 1);
@@ -61,9 +60,10 @@ class Zip
         $zip->close();
 
         // Delete all files from "delete list"
-        foreach ($filesToDelete as $file)
-        {
-            unlink($file);
+        foreach ($filesToDelete as $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
         }
         rmdir($this->ecfDirectory . str_replace(' ', '_', $promo->getName()));
 

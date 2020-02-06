@@ -62,7 +62,7 @@ class StudentController extends Controller
                 $fileName = $fileUploader->upload($file);
                 $student->setSign($fileName);
 
-                if ($signT != null){
+                if ($signT != null && file_exists($this->getParameter('sign_directory') . $signT)){
                     unlink($this->getParameter('sign_directory') . $signT);
                 }
             } else {
