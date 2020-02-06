@@ -79,7 +79,7 @@ class PromoController extends Controller
                 $fileName = $fileUploader->upload($file);
                 $promo->setSignCM($fileName);
 
-                if ($signCM != null){
+                if ($signCM != null && file_exists($this->getParameter('sign_directory') . $signCM)){
                     unlink($this->getParameter('sign_directory') . $signCM);
                 }
             } else {
